@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        #container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        #upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        #file-name {
+            margin-left: 10px;
+        }
+
+        #output {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: left;
+            max-width: 400px;
+            overflow: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="upload-btn-wrapper">
+        <button class="btn">选择文件</button>
+        <input type="file" name="myfile" id="myfile" />
+    </div>
+    <span id="file-name"></span>
+    <div id="output" style="width: 500px; height: 400px; overflow: auto;"></div>
+</div>
+
+<script>
+    document.getElementById("myfile").addEventListener("change", function () {
+        var fullPath = this.value;
+        var fileName = fullPath.replace(/^.*[\\\/]/, '');
+        document.getElementById("file-name").innerText = "文件名: " + fileName;
+    });
+
+    document.getElementById("myfile").addEventListener("change", function () {
+        var fileInput = document.getElementById('myfile');
+        var file = fileInput.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('output').innerText = e.target.result;
+            };
+            reader.readAsText(file);
+        }
+    });
+</script>
+</body>
+</html>

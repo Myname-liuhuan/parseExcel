@@ -1,0 +1,23 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: parseExcel
+  web:
+    resources:
+      static-locations: classpath:/static/
+#????????
+logging:
+  level:
+    org:
+      #???????
+      springframework: error
+    com:
+      example:
+        mapper: debug
+
+
+#?????,????????????
+poi:
+  excel:
+    defaultPath: /Users/huanliu/Documents/file/exportExcel/
