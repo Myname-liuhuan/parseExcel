@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
+
 /**
  * @author liuhuan
  * @date 2023/11/14
@@ -20,7 +22,7 @@ public class SimpleParseController {
     SimpleParseService simpleParseService;
 
     @RequestMapping("/excelToText")
-    public String excelToText(MultipartFile file){
+    public Map<String, Object> excelToText(MultipartFile file){
         return simpleParseService.excelToText(file);
     }
 

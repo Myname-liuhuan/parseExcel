@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload Page</title>
+    <script src="./js/jquery-3.3.1.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -43,7 +44,7 @@
             margin-left: 10px;
         }
 
-        #output {
+        #output, #output2 {
             margin-top: 20px;
             border: 1px solid #ccc;
             padding: 10px;
@@ -64,7 +65,11 @@
         <input type="file" name="myfile" id="myfile" />
     </div>
     <span id="file-name"></span>
-    <div id="output" style="width: 500px; height: 400px; overflow: auto;"></div>
+    <div style="display: flex">
+        <div id="output" style="width: 500px; height: 400px; overflow: auto;"></div>
+        <div id="output2" style="width: 500px; height: 400px; overflow: auto;"></div>
+    </div>
+
 </div>
 
 <script>
@@ -78,13 +83,36 @@
         var fileInput = document.getElementById('myfile');
         var file = fileInput.files[0];
 
-        if (file) {
+      /*  if (file) {
             var reader = new FileReader();
             reader.onload = function (e) {
                 document.getElementById('output').innerText = e.target.result;
             };
             reader.readAsText(file);
-        }
+        }*/
+
+        let formData = new FormData();
+        formData.append('file',file);
+
+        $.ajax({
+            url:'http://' + window.location.host + '/simpleParse/excelToText',
+            type: 'post',
+            data: formData,
+            processData : false, // 使数据不做处理
+            contentType : false, // 不要设置Content-Type请求头
+            success: function (res) {
+                console.log(res);
+                debugger
+                if(res){
+                    document.getElementById('output').innerText = res.create;
+                    document.getElementById('output2').innerText = res.select;
+                }
+            },
+            error: function () {
+                console.log("error");
+            }
+        })
+
     });
 </script>
 </body>

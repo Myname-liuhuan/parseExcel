@@ -10,13 +10,16 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class SimpleParseService {
 
-    private int rowStartIndex = 8;
+    //表头开的行
+    private int rowStartIndex = 6;
     private int sheetIndex = 2;
 
     /**
@@ -24,37 +27,64 @@ public class SimpleParseService {
      * @param file
      * @return
      */
-    public String excelToText(@RequestParam MultipartFile file){
+    public Map<String, Object> excelToText(@RequestParam MultipartFile file){
+
+        StringBuilder sb = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        String createTemplate = "`%s` %s %s COMMENT '%s',\n";
+        String selectTemplate = " t.%s AS %s,\n";
+        //需要的字段
+        Map<String, String> singleRowMap = new HashMap<String, String>(){{
+            put("字段名", null);
+            put("字段ID", null);
+            put("NotNull", null);
+            put("字段属性", null);
+            put("原字段名", null);
+        }};
+
         //判断是否excel
         String originalFilename = file.getOriginalFilename();
         if (StringUtils.isEmpty(originalFilename)){
-            return "文件错误";
+            return null;
         }
         try {
-            //POIFSFileSystem pfs = new POIFSFileSystem(file.getInputStream());
             XSSFWorkbook xwb = new XSSFWorkbook(file.getInputStream());
             Sheet sheet = xwb.getSheetAt(sheetIndex);
-
-            int rowEndIndex = sheet.getLastRowNum();
-            for (int i = rowStartIndex; i <= rowEndIndex; i++){
-                Row row = sheet.getRow(i);
-                int colStartIndex = row.getFirstCellNum();
-                int colEndIndex = row.getLastCellNum();
-                for (int m = colStartIndex; m < colEndIndex; m++){
-                    Cell cell = row.getCell(m);
-                    String s = cell==null?"":cell.toString();
+            Map<Integer, String> mapIndex = new HashMap<>();
+            //表 头行
+            Row thRow = sheet.getRow(rowStartIndex);
+            for (Cell cell : thRow) {
+                if (cell != null && !StringUtils.isEmpty(cell.toString()) && singleRowMap.containsKey(cell.toString())){
+                    mapIndex.put(cell.getColumnIndex(), cell.toString());
                 }
             }
 
+            int rowEndIndex = sheet.getLastRowNum();
+            for (int i = rowStartIndex + 2; i <= rowEndIndex; i++){
+                Row row = sheet.getRow(i);
+
+                int colStartIndex = row.getFirstCellNum();
+                int colEndIndex = row.getLastCellNum();
+                for (int m = colStartIndex; m < colEndIndex; m++){
+                    if (mapIndex.containsKey(m)){
+                        Cell cell = row.getCell(m);
+                        singleRowMap.put(mapIndex.get(m), cell==null?"":cell.toString());
+                    }
+                }
+                sb.append(String.format(createTemplate, singleRowMap.get("字段ID"),
+                        singleRowMap.get("字段属性"),
+                        "Y".equalsIgnoreCase(singleRowMap.get("NotNull"))? "NOT NULL":"",
+                        singleRowMap.get("原字段名")));
+                sb2.append(String.format(selectTemplate, singleRowMap.get("原字段名"),
+                        singleRowMap.get("字段ID")));
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
-
-
-        return "";
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("create", sb.toString());
+        resultMap.put("select", sb2.toString());
+        return resultMap;
     }
 
-//    private
 }
