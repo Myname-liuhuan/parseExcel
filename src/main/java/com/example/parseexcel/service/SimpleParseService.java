@@ -10,10 +10,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Service
 public class SimpleParseService {
@@ -71,10 +69,11 @@ public class SimpleParseService {
                         singleRowMap.put(mapIndex.get(m), cell==null?"":cell.toString());
                     }
                 }
-                sb.append(String.format(createTemplate, singleRowMap.get("字段ID"),
+                sb.append(String.format(createTemplate,
+                        StringUtils.trimAllWhitespace(singleRowMap.get("字段ID")),
                         singleRowMap.get("字段属性"),
                         "Y".equalsIgnoreCase(singleRowMap.get("NotNull"))? "NOT NULL":"",
-                        singleRowMap.get("原字段名")));
+                        singleRowMap.get("字段名")));
                 sb2.append(String.format(selectTemplate, singleRowMap.get("原字段名"),
                         singleRowMap.get("字段ID")));
             }
@@ -85,6 +84,11 @@ public class SimpleParseService {
         resultMap.put("create", sb.toString());
         resultMap.put("select", sb2.toString());
         return resultMap;
+    }
+
+    public static void main(String[] args) {
+        String p = "^[a-z]";
+        System.out.println("1".matches(p));
     }
 
 }
