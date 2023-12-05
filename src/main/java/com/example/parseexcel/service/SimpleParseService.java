@@ -52,8 +52,9 @@ public class SimpleParseService {
             //表 头行
             Row thRow = sheet.getRow(rowStartIndex);
             for (Cell cell : thRow) {
-                if (cell != null && !StringUtils.isEmpty(cell.toString()) && singleRowMap.containsKey(cell.toString())){
-                    mapIndex.put(cell.getColumnIndex(), cell.toString());
+                if (cell != null && !StringUtils.isEmpty(cell.toString()) &&
+                        singleRowMap.containsKey(StringUtils.trimAllWhitespace(cell.toString()))){
+                    mapIndex.put(cell.getColumnIndex(), StringUtils.trimAllWhitespace(cell.toString()));
                 }
             }
 
