@@ -13,6 +13,9 @@ logging:
     com:
       example:
         mapper: debug
+#生成kettle脚本配置
+kettle:
+  output: ~/Documents/ISPR/kettle_file
 
 
 
