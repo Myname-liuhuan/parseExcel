@@ -15,7 +15,8 @@ logging:
         mapper: debug
 #生成kettle脚本配置
 kettle:
-  output: ~/Documents/ISPR/kettle_file
+  output:
+    path: ~/Documents/ISPR/kettle_file/售后/售后保修/
 
 
 

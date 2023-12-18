@@ -1,9 +1,9 @@
 package com.example.parseexcel.common.utils;
 
+import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -39,6 +39,40 @@ public class FileContentUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
+    }
+
+    /**
+     * 读取resource中的内容为文本
+     * @param resource
+     * @return
+     */
+    public static String readResource(Resource resource){
+        String result = null;
+        try (InputStream inputStream = resource.getInputStream();
+             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+             BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
+            StringBuilder content = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+            result = content.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    /**
+     * 输出文件内容
+     * @param source
+     * @param outputPath
+     * @param fileName
+     * @return
+     */
+    public static boolean outputFile(String source, String outputPath, String fileName){
         return false;
     }
 

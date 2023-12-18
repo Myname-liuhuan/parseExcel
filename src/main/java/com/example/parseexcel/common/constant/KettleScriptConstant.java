@@ -34,7 +34,7 @@ public class KettleScriptConstant {
     public static final String SCRIPT_NAME_WORK = TEMPLATE_PATH + "ScriptName.kjb";
 
     /**
-     * 转移1：源库到中间库
+     * 源库到中间库
      */
     public static final String SCRIPT_NAME_TRANS01 = "ScriptName01.ktr";
 
