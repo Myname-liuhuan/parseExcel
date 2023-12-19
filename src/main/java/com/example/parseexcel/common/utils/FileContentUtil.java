@@ -1,5 +1,6 @@
 package com.example.parseexcel.common.utils;
 
+import com.example.parseexcel.service.KettleScriptOutPutService;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
@@ -59,6 +60,29 @@ public class FileContentUtil {
             }
             result = content.toString();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 通过类加载器读取resource下面的文件
+     * @param clazz
+     * @param sourcePath 要读取的文件的路径
+     * @return
+     */
+    public static String readByClazz(Class clazz, String sourcePath){
+        String result = null;
+        try(InputStream inputStream = clazz.getClassLoader().getResourceAsStream(sourcePath);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader)){
+            StringBuilder content = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+            result = content.toString();
+        }catch (Exception e){
             e.printStackTrace();
         }
         return result;
