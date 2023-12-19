@@ -29,6 +29,11 @@ public class KettleScriptConstant {
     private static final String TEMPLATE_PATH = "classpath:static/template/kettle/";
 
     /**
+     * 在原生Java方式导出的时候用到的模板路径
+     */
+    private static final String TEMPLATE_PATH_NO_SPRING = "static/template/kettle/";
+
+    /**
      * 常见地含有4个转换的作业
      */
     public static final String SCRIPT_NAME_WORK = TEMPLATE_PATH + "ScriptName.kjb";
@@ -52,4 +57,6 @@ public class KettleScriptConstant {
      * 脚本迁移失败
      */
     public static final String SCRIPT_NAME_TRANS04 = "ScriptName04.ktr";
+
+    public static final String WINDOW_OUTPUT_PATH = "D:/Kettle_file/";
 }

@@ -72,8 +72,14 @@ public class FileContentUtil {
      * @param fileName
      * @return
      */
-    public static boolean outputFile(String source, String outputPath, String fileName){
-        return false;
+    public static void outputFile(String source, String outputPath, String fileName){
+        try(FileOutputStream fileOutputStream = new FileOutputStream(outputPath + fileName, false);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
+            BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter)){
+            bufferedWriter.write(source);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

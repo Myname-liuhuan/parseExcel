@@ -44,4 +44,27 @@ public class KettleScriptOutPutService {
         }
     }
 
+    /**
+     * 不依赖spring进行输出脚本
+     * @param sortPath 短路径     售后/售后保修/
+     * @param targetDatabaseName 目标表名称
+     * @param middleDatabaseName 中间表名称
+     * @param scriptNameMap 需要输出的模板文件及其输出名称 key: 模板文件路径; value: 输出文件名称
+     */
+    public void outPutScriptNoSpring(String sortPath, String targetDatabaseName, String middleDatabaseName,
+                                     Map<String,String> scriptNameMap){
+        //创建脚本文件夹,创建目标库文件夹
+        File directory = new File(outputPath + sortPath);
+        if (!directory.exists()){
+            directory.mkdirs();
+        }
+
+        //输出逻辑
+        for (Map.Entry<String, String> entry : scriptNameMap.entrySet()) {
+            Resource resource = resourceLoader.getResource(entry.getKey());
+            String text = FileContentUtil.readResource(resource);
+            FileContentUtil.outputFile(text, outputPath, entry.getValue());
+        }
+    }
+
 }
