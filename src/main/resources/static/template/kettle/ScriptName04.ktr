@@ -509,7 +509,7 @@
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
     <quoteString>N</quoteString>
-    <sql>UPDATE MiddleDatabaseName
+    <sql>UPDATE MiddleTableName
 SET datamigrationflag = 1,
 datamigrationtime = NOW()
 WHERE dataconversionflag = 1</sql>

@@ -76,14 +76,14 @@ public class KettleScriptOutPutService {
     public static void main(String[] args) {
         Map<String, String> scriptNameMap = new HashMap<>();
         scriptNameMap.put(KettleConstant.SCRIPT_NAME_WORK, "SSC公示车辆VIN（技术支持组）.kjb");
-        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS01, "SSC公示车辆VIN（技术支持组）01.kjb");
-        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS02, "SSC公示车辆VIN（技术支持组）02.kjb");
-        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS03, "SSC公示车辆VIN（技术支持组）03.kjb");
-        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS04, "SSC公示车辆VIN（技术支持组）04.kjb");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS01, "SSC公示车辆VIN（技术支持组）01.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS02, "SSC公示车辆VIN（技术支持组）02.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS03, "SSC公示车辆VIN（技术支持组）03.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS04, "SSC公示车辆VIN（技术支持组）04.ktr");
         Map<String, String>  replaceMap = new HashMap<>();
         replaceMap.put("ScriptName", "SSC公示车辆VIN（技术支持组）");
-        replaceMap.put("TargetDatabaseName", "t_wty_ssc_public_vin");
-        replaceMap.put("MiddleDatabaseName", "srv_ssc_m_middle2");
+        replaceMap.put("TargetTableName", "t_wty_ssc_public_vin");
+        replaceMap.put("MiddleTableName", "srv_ssc_m_middle2");
         new KettleScriptOutPutService(null).outPutScriptNoSpring("",
                 "SSC公示车辆VIN（技术支持组）",
                 "t_wty_ssc_public_vin",

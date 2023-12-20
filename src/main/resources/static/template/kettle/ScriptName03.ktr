@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>TargetDatabaseName03</name>
+    <name>ScriptName03</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -514,7 +514,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${file_path}/售后/售后服务/TargetDatabaseName/TargetDatabaseName/TargetDatabaseName.csv</filename>
+    <filename>${file_path}/售后/售后保修/ScriptName/TargetTableName/ScriptName.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -571,7 +571,7 @@
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>UPDATE MiddleDatabaseName
+    <sql>UPDATE MiddleTableName
 SET datamigrationflag = 2,
 datamigrationtime = NOW()
 WHERE dms_id = ?</sql>
@@ -615,7 +615,7 @@ WHERE dms_id = ?</sql>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
     <quoteString>N</quoteString>
-    <sql>UPDATE MiddleDatabaseName
+    <sql>UPDATE MiddleTableName
 SET datamigrationflag = 1,
 datamigrationtime = NOW()
 WHERE datamigrationflag &lt;&gt; 2</sql>

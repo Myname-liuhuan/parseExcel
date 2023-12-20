@@ -426,7 +426,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${file_path}/售后/售后服务/ScriptName/TargetDatabaseName/ScriptName01.ktr</filename>
+      <filename>${file_path}/售后/售后保修/ScriptName/TargetTableName/ScriptName01.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -464,7 +464,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${file_path}/售后/售后服务/ScriptName/TargetDatabaseName/ScriptName02.ktr</filename>
+      <filename>${file_path}/售后/售后保修/ScriptName/TargetTableName/ScriptName02.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -502,7 +502,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${file_path}/售后/售后服务/ScriptName/TargetDatabaseName/ScriptName04.ktr</filename>
+      <filename>${file_path}/售后/售后保修/ScriptName/TargetTableName/ScriptName04.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -540,7 +540,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${file_path}/售后/售后服务/ScriptName/TargetDatabaseName/ScriptName03.ktr</filename>
+      <filename>${file_path}/售后/售后保修/ScriptName/TargetTableName/ScriptName03.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -576,7 +576,7 @@
       <description/>
       <type>FILE_EXISTS</type>
       <attributes/>
-      <filename>${file_path}/售后/售后服务/ScriptName/TargetDatabaseName/ScriptName.csv</filename>
+      <filename>${file_path}/售后/售后保修/ScriptName/TargetTableName/ScriptName.csv</filename>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
@@ -589,7 +589,7 @@
       <description/>
       <type>SQL</type>
       <attributes/>
-      <sql>truncate MiddleDatabaseName</sql>
+      <sql>truncate MiddleTableName</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
@@ -607,7 +607,7 @@
       <description/>
       <type>SQL</type>
       <attributes/>
-      <sql>truncate TargetDatabaseName</sql>
+      <sql>truncate TargetTableName;</sql>
       <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
@@ -687,29 +687,6 @@
     </hop>
   </hops>
   <notepads>
-    <notepad>
-      <note>前置表
-srv_customer_f_middle 售后车辆信息
-cmn_customer_f_middle 售后客户信息</note>
-      <xloc>171</xloc>
-      <yloc>98</yloc>
-      <width>331</width>
-      <heigth>79</heigth>
-      <fontname>Microsoft YaHei UI</fontname>
-      <fontsize>9</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>205</backgroundcolorgreen>
-      <backgroundcolorblue>112</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
   </notepads>
   <attributes/>
 </job>
