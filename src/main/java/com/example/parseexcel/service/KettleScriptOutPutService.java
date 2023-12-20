@@ -50,9 +50,13 @@ public class KettleScriptOutPutService {
      * @param replaceMap 要替换以及替换为的map,key:现存文本中的待替换字段；value:即将替换为的字段
      * @param scriptNameMap 需要输出的模板文件及其输出名称 key: 模板名称; value: 输出文件名称
      */
-    public void outPutScriptNoSpring(String subPath, Map<String, String> replaceMap, Map<String,String> scriptNameMap){
+    public void outPutScriptNoSpring(String subPath, String scriptName, String targetTableName,
+                                     Map<String, String> replaceMap, Map<String,String> scriptNameMap){
+        String dirPath = KettleConstant.WINDOW_OUTPUT_PATH
+                + KettleConstant.WINDOW_OUTPUT_PATH_SUB
+                + scriptName + "/" + targetTableName + "/";
         //创建脚本文件夹,创建目标库文件夹
-        File directory = new File(KettleConstant.WINDOW_OUTPUT_PATH + KettleConstant.WINDOW_OUTPUT_PATH_SUB);
+        File directory = new File(dirPath);
         if (!directory.exists()){
             directory.mkdirs();
         }
@@ -65,13 +69,26 @@ public class KettleScriptOutPutService {
             for (Map.Entry<String, String> replaceEntry : replaceMap.entrySet()) {
                 text = text.replaceAll(replaceEntry.getKey(), replaceEntry.getValue());
             }
-            FileContentUtil.outputFile(text, outputPath, entry.getValue());
+            FileContentUtil.outputFile(text, dirPath, entry.getValue());
         }
     }
 
     public static void main(String[] args) {
-        Map<String, String> replaceMap = new HashMap<>();
-        replaceMap.put(KettleConstant.SCRIPT_NAME_WORK, "测试.kjb");
+        Map<String, String> scriptNameMap = new HashMap<>();
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_WORK, "SSC公示车辆VIN（技术支持组）.kjb");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS01, "SSC公示车辆VIN（技术支持组）01.kjb");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS02, "SSC公示车辆VIN（技术支持组）02.kjb");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS03, "SSC公示车辆VIN（技术支持组）03.kjb");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS04, "SSC公示车辆VIN（技术支持组）04.kjb");
+        Map<String, String>  replaceMap = new HashMap<>();
+        replaceMap.put("ScriptName", "SSC公示车辆VIN（技术支持组）");
+        replaceMap.put("TargetDatabaseName", "t_wty_ssc_public_vin");
+        replaceMap.put("MiddleDatabaseName", "srv_ssc_m_middle2");
+        new KettleScriptOutPutService(null).outPutScriptNoSpring("",
+                "SSC公示车辆VIN（技术支持组）",
+                "t_wty_ssc_public_vin",
+                replaceMap,
+                scriptNameMap);
     }
 
 }
