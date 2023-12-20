@@ -11,17 +11,6 @@ import java.util.Map;
  */
 public class KettleConstant {
 
-    /**
-     * 需要替换的参数集合
-     */
-    public static final Map<String, String> REPLACE_MAP = ImmutableMap.<String, String>builder()
-            //脚本名称
-            .put("ScriptName", "ScriptName")
-            //目标库名称
-            .put("TargetDatabaseName", "TargetDatabaseName")
-            //中间表名称
-            .put("MiddleDatabaseName", "MiddleDatabaseName")
-            .build();
 
     /**
      * kettle脚本模板在resource目录下的路径
@@ -32,6 +21,14 @@ public class KettleConstant {
      * 在原生Java方式导出的时候用到的模板路径
      */
     public static final String TEMPLATE_PATH_NO_SPRING = "static/template/kettle/";
+
+    /**
+     * 现存于模板文件中的占位符(属于必须要传的参数)
+     */
+    public static final String SCRIPT_NAME= "ScriptName";
+    public static final String TARGET_TABLE_NAME = "TargetTableName";
+    public static final String MIDDLE_TABLE_NAME = "MiddleTableName";
+
 
     /**
      * 常见地含有4个转换的作业

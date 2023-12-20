@@ -73,22 +73,31 @@ public class KettleScriptOutPutService {
         }
     }
 
-    public static void main(String[] args) {
+    /**
+     * 默认输出的方式 即一个作业四个转换
+     * @param scriptName
+     * @param targetTableName
+     * @param middleTableName
+     */
+    private void defaultOutPut(String scriptName, String targetTableName, String middleTableName){
         Map<String, String> scriptNameMap = new HashMap<>();
-        scriptNameMap.put(KettleConstant.SCRIPT_NAME_WORK, "SSC公示车辆VIN（技术支持组）.kjb");
-        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS01, "SSC公示车辆VIN（技术支持组）01.ktr");
-        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS02, "SSC公示车辆VIN（技术支持组）02.ktr");
-        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS03, "SSC公示车辆VIN（技术支持组）03.ktr");
-        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS04, "SSC公示车辆VIN（技术支持组）04.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_WORK, scriptName + ".kjb");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS01, scriptName + "S01.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS02, scriptName + "02.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS03, scriptName + "03.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS04, scriptName + "04.ktr");
         Map<String, String>  replaceMap = new HashMap<>();
-        replaceMap.put("ScriptName", "SSC公示车辆VIN（技术支持组）");
-        replaceMap.put("TargetTableName", "t_wty_ssc_public_vin");
-        replaceMap.put("MiddleTableName", "srv_ssc_m_middle2");
-        new KettleScriptOutPutService(null).outPutScriptNoSpring("",
+        replaceMap.put(KettleConstant.SCRIPT_NAME, scriptName);
+        replaceMap.put(KettleConstant.TARGET_TABLE_NAME, targetTableName);
+        replaceMap.put(KettleConstant.MIDDLE_TABLE_NAME, middleTableName);
+        outPutScriptNoSpring("", scriptName, targetTableName, replaceMap, scriptNameMap);
+    }
+
+    public static void main(String[] args) {
+        new KettleScriptOutPutService(null).defaultOutPut(
                 "SSC公示车辆VIN（技术支持组）",
                 "t_wty_ssc_public_vin",
-                replaceMap,
-                scriptNameMap);
+                "srv_ssc_m_middle2");
     }
 
 }
