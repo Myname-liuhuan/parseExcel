@@ -82,7 +82,7 @@ public class KettleScriptOutPutService {
     private void defaultOutPut(String scriptName, String targetTableName, String middleTableName){
         Map<String, String> scriptNameMap = new HashMap<>();
         scriptNameMap.put(KettleConstant.SCRIPT_NAME_WORK, scriptName + ".kjb");
-        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS01, scriptName + "S01.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS01, scriptName + "01.ktr");
         scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS02, scriptName + "02.ktr");
         scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS03, scriptName + "03.ktr");
         scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS04, scriptName + "04.ktr");
@@ -95,9 +95,9 @@ public class KettleScriptOutPutService {
 
     public static void main(String[] args) {
         new KettleScriptOutPutService(null).defaultOutPut(
-                "SSC公示车辆VIN（技术支持组）",
-                "t_wty_ssc_public_vin",
-                "srv_ssc_m_middle2");
+                "售后保修_汇率",
+                "t_wty_exchange_rate",
+                "srv_exchangerate_m_middle");
     }
 
 }
