@@ -99,6 +99,7 @@ public class KettleScriptOutPutService {
                 "t_wty_exchange_rate",
                 "srv_exchangerate_m_middle");
 
+
     }
 
 }
