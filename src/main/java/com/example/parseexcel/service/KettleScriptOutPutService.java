@@ -98,6 +98,7 @@ public class KettleScriptOutPutService {
                 "售后保修_汇率",
                 "t_wty_exchange_rate",
                 "srv_exchangerate_m_middle");
+
     }
 
 }
