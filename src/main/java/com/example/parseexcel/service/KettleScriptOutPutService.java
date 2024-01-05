@@ -86,7 +86,7 @@ public class KettleScriptOutPutService {
         scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS02, scriptName + "02.ktr");
         scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS03, scriptName + "03.ktr");
         scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS04, scriptName + "04.ktr");
-        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS01, scriptName + "05.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS05, scriptName + "05.ktr");
         Map<String, String>  replaceMap = new HashMap<>();
         replaceMap.put(KettleConstant.SCRIPT_NAME, scriptName);
         replaceMap.put(KettleConstant.TARGET_TABLE_NAME, targetTableName);
@@ -122,7 +122,7 @@ public class KettleScriptOutPutService {
 
         new KettleScriptOutPutService(null).outPutModel1(
                 "整车保修_STWC对外委托项目",
-                "t_wty_vehicle_wty_info_detail",
+                "t_wty_stwc_sublet",
                 "srv_stwcsublet_f_middle2");
     }
 
