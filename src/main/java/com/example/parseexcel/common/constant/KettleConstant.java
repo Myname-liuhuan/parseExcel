@@ -34,6 +34,7 @@ public class KettleConstant {
      * 常见地含有4个转换的作业
      */
     public static final String SCRIPT_NAME_WORK = "ScriptName.kjb";
+    public static final String SCRIPT_NAME_WORK_HISTORY = "ScriptName1.kjb";
 
     /**
      * 源库到中间库
@@ -54,6 +55,7 @@ public class KettleConstant {
      * 脚本迁移失败
      */
     public static final String SCRIPT_NAME_TRANS04 = "ScriptName04.ktr";
+    public static final String SCRIPT_NAME_TRANS05 = "ScriptName05.ktr";
 
     /**
      * 输出目录
