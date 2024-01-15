@@ -115,15 +115,15 @@ public class KettleScriptOutPutService {
     }
 
     public static void main(String[] args) {
-        /*new KettleScriptOutPutService(null).defaultOutPut(
-                "车辆三包维修信息详情（下沉共通组）",
-                "t_wty_vehicle_wty_info_detail",
-                "srv_threesoldvehicle_m_middle4");*/
+       /* new KettleScriptOutPutService(null).defaultOutPut(
+                "零件保修_TWCInvoiceNoMaster",
+                "t_wty_twc_invoice",
+                "srv_twcinvoice_m_middle2");*/
 
         new KettleScriptOutPutService(null).outPutModel1(
-                "整车保修_STWC对外委托项目",
-                "t_wty_stwc_sublet",
-                "srv_stwcsublet_f_middle2");
+                "零件外销单表",
+                "t_parts_sales_export_order",
+                "srv_order_f_middle3");
     }
 
 }
