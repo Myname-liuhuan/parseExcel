@@ -61,6 +61,9 @@ public class KettleScriptOutPutService {
             directory.mkdirs();
         }
 
+        //文本内动态路径
+        replaceMap.put(KettleConstant.SUB_PATH, KettleConstant.WINDOW_OUTPUT_PATH_SUB);
+
         //输出逻辑
         for (Map.Entry<String, String> entry : scriptNameMap.entrySet()) {
             String templatePath = KettleConstant.TEMPLATE_PATH_NO_SPRING + entry.getKey();

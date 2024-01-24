@@ -514,7 +514,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${file_path}/售后/售后保修/ScriptName/TargetTableName/ScriptName.csv</filename>
+    <filename>${file_path}/SubPathScriptName/TargetTableName/ScriptName.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>

@@ -28,6 +28,8 @@ public class KettleConstant {
     public static final String SCRIPT_NAME= "ScriptName";
     public static final String TARGET_TABLE_NAME = "TargetTableName";
     public static final String MIDDLE_TABLE_NAME = "MiddleTableName";
+    public static final String SUB_PATH = "SubPath";
+     
 
 
     /**

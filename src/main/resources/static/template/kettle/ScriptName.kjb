@@ -426,7 +426,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${file_path}/售后/售后保修/ScriptName/TargetTableName/ScriptName01.ktr</filename>
+      <filename>${file_path}/SubPathScriptName/TargetTableName/ScriptName01.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -464,7 +464,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${file_path}/售后/售后保修/ScriptName/TargetTableName/ScriptName02.ktr</filename>
+      <filename>${file_path}/SubPathScriptName/TargetTableName/ScriptName02.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -502,7 +502,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${file_path}/售后/售后保修/ScriptName/TargetTableName/ScriptName04.ktr</filename>
+      <filename>${file_path}/SubPathScriptName/TargetTableName/ScriptName04.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -540,7 +540,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${file_path}/售后/售后保修/ScriptName/TargetTableName/ScriptName03.ktr</filename>
+      <filename>${file_path}/SubPathScriptName/TargetTableName/ScriptName03.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -576,7 +576,7 @@
       <description/>
       <type>FILE_EXISTS</type>
       <attributes/>
-      <filename>${file_path}/售后/售后保修/ScriptName/TargetTableName/ScriptName.csv</filename>
+      <filename>${file_path}/SubPathScriptName/TargetTableName/ScriptName.csv</filename>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
