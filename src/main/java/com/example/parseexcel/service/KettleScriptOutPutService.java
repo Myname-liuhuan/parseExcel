@@ -96,13 +96,37 @@ public class KettleScriptOutPutService {
         outPutScriptNoSpring("", scriptName, targetTableName, replaceMap, scriptNameMap);
     }
 
+    /**
+     * 一个作业五个转换（历史表）
+     * @param scriptName
+     * @param targetTableName
+     * @param middleTableName
+     */
+    private void outPut1(String scriptName, String targetTableName, String middleTableName){
+        Map<String, String> scriptNameMap = new HashMap<>();
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_WORK_HISTORY, scriptName + ".kjb");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS01, scriptName + "01.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS02, scriptName + "02.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS03, scriptName + "03.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS04, scriptName + "04.ktr");
+        scriptNameMap.put(KettleConstant.SCRIPT_NAME_TRANS05, scriptName + "05.ktr");
+        Map<String, String>  replaceMap = new HashMap<>();
+        replaceMap.put(KettleConstant.SCRIPT_NAME, scriptName);
+        replaceMap.put(KettleConstant.TARGET_TABLE_NAME, targetTableName);
+        replaceMap.put(KettleConstant.MIDDLE_TABLE_NAME, middleTableName);
+        outPutScriptNoSpring("", scriptName, targetTableName, replaceMap, scriptNameMap);
+    }
+
     public static void main(String[] args) {
-        new KettleScriptOutPutService(null).defaultOutPut(
-                "售后保修_汇率",
-                "t_wty_exchange_rate",
-                "srv_exchangerate_m_middle");
+        // new KettleScriptOutPutService(null).defaultOutPut(
+        //         "SSC市场处置活动车辆清单-VIN",
+        //         "t_wty_ssc_vehicle_item_vin",
+        //         "srv_ssc_m_middle4");
 
-
+        new KettleScriptOutPutService(null).outPut1(
+            "零件保修_WCSR记录进口车TWC数据",
+            "t_wty_wcsr_twc",
+            "srv_wcsrtwc_f_middle3");
     }
 
 }
