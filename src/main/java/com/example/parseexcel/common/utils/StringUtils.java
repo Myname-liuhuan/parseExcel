@@ -15,5 +15,10 @@ public class StringUtils {
     public static String cutString(String sourceStr){
         return sourceStr.substring(sourceStr.indexOf("_"), sourceStr.lastIndexOf("."));
     }
+
+    public static String cutLastString(String sourceStr){
+        return sourceStr.substring(sourceStr.lastIndexOf("_"), sourceStr.lastIndexOf("."));
+    }
+
     
 }

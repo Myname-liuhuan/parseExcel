@@ -55,6 +55,7 @@ public class GenerateTestCasesService {
             data.setShortProjectName("ST-06_业务数据测试用例");
             data.setProjectName("ST-06_业务数据测试用例" + StringUtils.cutString(file.getName()));
             data.setWriterName("刘欢");
+            data.setLastProjectName(StringUtils.cutLastString(file.getName()));
             
             //读取文件内容
             List<CSYLColDataEntity> colDataList = new ArrayList<>();
@@ -71,7 +72,8 @@ public class GenerateTestCasesService {
                     Map<String, Object> beanMap = new HashMap<>();
                     for (int m = colStartIndex; m < colEndIndex; m++){
                         Cell cell = row.getCell(m);
-                        beanMap.put(ExcelConstant.COLMAP.get(i), cell==null?"":cell.toString());
+                        String str = cell==null?"":cell.toString();
+                        beanMap.put(ExcelConstant.COLMAP.get(i), str);
                     }
                     CSYLColDataEntity calData = JSON.parseObject(JSON.toJSONString(beanMap), CSYLColDataEntity.class);
                     colDataList.add(calData);

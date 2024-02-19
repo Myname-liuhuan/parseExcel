@@ -37,4 +37,10 @@ public class CSYLDataEntity {
      * 作者
      */
     String writerName;
+
+    /**
+     * sheet(2)
+     * 表名(中文)
+     */
+    String lastProjectName;
 }
