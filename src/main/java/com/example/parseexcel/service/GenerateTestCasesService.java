@@ -77,13 +77,12 @@ public class GenerateTestCasesService {
                 for (int i = ExcelConstant.ROWSTARTINDEX + 1; i <= rowEndIndex; i++){
                     Row row = sheet.getRow(i);
 
-                    int colStartIndex = ExcelConstant.COLSTARTINDEX;
                     int colEndIndex = row.getLastCellNum();
                     Map<String, Object> beanMap = new HashMap<>();
-                    for (int m = colStartIndex; m < colEndIndex; m++){
+                    for (int m = ExcelConstant.COLSTARTINDEX; m < colEndIndex; m++){
                         Cell cell = row.getCell(m);
-                        String str = cell==null?"":cell.toString();
-                        beanMap.put(ExcelConstant.COLMAP.get(i), str);
+                        String str =  cell==null? "":cell.toString();
+                        beanMap.put(ExcelConstant.COLMAP.get(m), str);
                     }
                     CSYLColDataEntity calData = JSON.parseObject(JSON.toJSONString(beanMap), CSYLColDataEntity.class);
                     colDataList.add(calData);
@@ -101,7 +100,6 @@ public class GenerateTestCasesService {
      */
     public void compositeInsertion(CSYLDataEntity data, List<CSYLColDataEntity> colDataList,
                                    String templatePath, String outputPath){
-
         //工作薄对象
         ExcelWriter workBook = EasyExcel.write(outputPath + data.getProjectName() + ".xlsx")
         .withTemplate(templatePath).build();
@@ -114,7 +112,6 @@ public class GenerateTestCasesService {
                 workBook.fill(colDataList, sheet);
             }
         }
-       
         workBook.finish();
     }
 
