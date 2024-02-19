@@ -43,10 +43,20 @@ public class GenerateTestCasesService {
 
         //先读取文件
         //String sourcePath = "D:\\svnsyc\\01_工程\\02_详细设计\\01_数据要件\\售后（正式版）\\03_售后保修";
-        String sourcePath = "D:\\run\\template\\csyl\\source";
+        //String sourcePath = "D:\\run\\template\\csyl\\source";
+        //String templatePath = "D:\\run\\template\\csyl\\template02.xlsx";
+        //String outputPath = "D:\\run\\template\\csyl\\target\\";
+
+        String sourcePath = "/Users/huanliu/Documents/ISPR/testfile/source/";
+        String templatePath = "/Users/huanliu/Documents/ISPR/testfile/template02.xlsx";
+        String outputPath = "/Users/huanliu/Documents/ISPR/testfile/target/";
+
         File directoryFile = new File(sourcePath);
         File[] files = directoryFile.listFiles();
         for (File file : files) {
+            if (file.isHidden()){
+                continue;
+            }
             CSYLDataEntity data = new CSYLDataEntity();
             data.setSourceFileName(file.getName());
             DateTimeFormatter dtfer = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -82,19 +92,19 @@ public class GenerateTestCasesService {
                e.printStackTrace();
             }
 
-            compositeInsertion(data, colDataList);
+            compositeInsertion(data, colDataList, templatePath, outputPath);
         }
     }
 
     /**
      * excel复合生成
      */
-    public void compositeInsertion(CSYLDataEntity data, List<CSYLColDataEntity> colDataList){
-        String template = "D:\\run\\template\\csyl\\template02.xlsx";
+    public void compositeInsertion(CSYLDataEntity data, List<CSYLColDataEntity> colDataList,
+                                   String templatePath, String outputPath){
+
         //工作薄对象
-        ExcelWriter workBook = EasyExcel.write("D:\\run\\template\\csyl\\target\\" 
-        + data.getProjectName() + ".xlsx")
-        .withTemplate(template).build();
+        ExcelWriter workBook = EasyExcel.write(outputPath + data.getProjectName() + ".xlsx")
+        .withTemplate(templatePath).build();
 
         //工作区对象
         for (int i = 0; i < 3; i++) {

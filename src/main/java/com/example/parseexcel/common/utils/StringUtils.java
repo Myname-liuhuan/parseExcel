@@ -17,7 +17,7 @@ public class StringUtils {
     }
 
     public static String cutLastString(String sourceStr){
-        return sourceStr.substring(sourceStr.lastIndexOf("_"), sourceStr.lastIndexOf("."));
+        return sourceStr.substring(sourceStr.lastIndexOf("_") + 1, sourceStr.lastIndexOf("."));
     }
 
     
