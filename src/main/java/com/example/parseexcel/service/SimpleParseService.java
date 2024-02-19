@@ -10,15 +10,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.parseexcel.common.constant.ExcelConstant;
+
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class SimpleParseService {
-
-    //表头开的行
-    private int rowStartIndex = 6;
-    private int sheetIndex = 2;
 
     /**
      * 简单解析
@@ -26,7 +24,6 @@ public class SimpleParseService {
      * @return
      */
     public Map<String, Object> excelToText(@RequestParam MultipartFile file){
-
         StringBuilder sb = new StringBuilder();
         StringBuilder sb2 = new StringBuilder();
         String createTemplate = "`%s` %s %s COMMENT '%s',\n";
@@ -45,12 +42,11 @@ public class SimpleParseService {
         if (StringUtils.isEmpty(originalFilename)){
             return null;
         }
-        try {
-            XSSFWorkbook xwb = new XSSFWorkbook(file.getInputStream());
-            Sheet sheet = xwb.getSheetAt(sheetIndex);
+        try(XSSFWorkbook xwb = new XSSFWorkbook(file.getInputStream())){
+            Sheet sheet = xwb.getSheetAt(ExcelConstant.SHEETINDEX);
             Map<Integer, String> mapIndex = new HashMap<>();
             //表 头行
-            Row thRow = sheet.getRow(rowStartIndex);
+            Row thRow = sheet.getRow(ExcelConstant.ROWSTARTINDEX);
             for (Cell cell : thRow) {
                 if (cell != null && !StringUtils.isEmpty(cell.toString()) &&
                         singleRowMap.containsKey(StringUtils.trimAllWhitespace(cell.toString()))){
@@ -59,7 +55,7 @@ public class SimpleParseService {
             }
 
             int rowEndIndex = sheet.getLastRowNum();
-            for (int i = rowStartIndex + 2; i <= rowEndIndex; i++){
+            for (int i = ExcelConstant.ROWSTARTINDEX + 2; i <= rowEndIndex; i++){
                 Row row = sheet.getRow(i);
 
                 int colStartIndex = row.getFirstCellNum();

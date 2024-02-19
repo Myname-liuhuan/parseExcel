@@ -1,0 +1,115 @@
+package com.example.parseexcel.service;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Service;
+
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
+import com.alibaba.excel.write.builder.ExcelWriterBuilder;
+import com.alibaba.excel.write.metadata.WriteSheet;
+import com.alibaba.excel.write.metadata.fill.FillConfig;
+import com.alibaba.fastjson2.JSON;
+import com.example.parseexcel.common.constant.ExcelConstant;
+import com.example.parseexcel.common.utils.StringUtils;
+import com.example.parseexcel.entity.CSYLColDataEntity;
+import com.example.parseexcel.entity.CSYLDataEntity;
+
+/**
+ * 测试用例生成逻辑
+ * 读取excel提取数据，然后按照模板生成测试用例的excel
+ */
+@Service
+public class GenerateTestCasesService {
+
+    /**
+     * excel单一模式生成
+     */
+    public void readSourceExcel(){
+
+        //先读取文件
+        //String sourcePath = "D:\\svnsyc\\01_工程\\02_详细设计\\01_数据要件\\售后（正式版）\\03_售后保修";
+        String sourcePath = "D:\\run\\template\\csyl\\source";
+        File directoryFile = new File(sourcePath);
+        File[] files = directoryFile.listFiles();
+        for (File file : files) {
+            CSYLDataEntity data = new CSYLDataEntity();
+            data.setSourceFileName(file.getName());
+            DateTimeFormatter dtfer = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            data.setCreateDate(sourcePath);
+            data.setCreateDate(dtfer.format(LocalDate.now()));
+            data.setShortProjectName("ST-06_业务数据测试用例");
+            data.setProjectName("ST-06_业务数据测试用例" + StringUtils.cutString(file.getName()));
+            data.setWriterName("刘欢");
+            
+            //读取文件内容
+            List<CSYLColDataEntity> colDataList = new ArrayList<>();
+            try( InputStream in = new FileInputStream(file);
+                XSSFWorkbook xwb = new XSSFWorkbook(in);){
+                Sheet sheet = xwb.getSheetAt(ExcelConstant.SHEETINDEX);
+
+                int rowEndIndex = sheet.getLastRowNum();
+                for (int i = ExcelConstant.ROWSTARTINDEX + 1; i <= rowEndIndex; i++){
+                    Row row = sheet.getRow(i);
+
+                    int colStartIndex = ExcelConstant.COLSTARTINDEX;
+                    int colEndIndex = row.getLastCellNum();
+                    Map<String, Object> beanMap = new HashMap<>();
+                    for (int m = colStartIndex; m < colEndIndex; m++){
+                        Cell cell = row.getCell(m);
+                        beanMap.put(ExcelConstant.COLMAP.get(i), cell==null?"":cell.toString());
+                    }
+                    CSYLColDataEntity calData = JSON.parseObject(JSON.toJSONString(beanMap), CSYLColDataEntity.class);
+                    colDataList.add(calData);
+                }
+            }catch (Exception e) {
+               e.printStackTrace();
+            }
+
+            compositeInsertion(data, colDataList);
+        }
+    }
+
+    /**
+     * excel复合生成
+     */
+    public void compositeInsertion(CSYLDataEntity data, List<CSYLColDataEntity> colDataList){
+        String template = "D:\\run\\template\\csyl\\template02.xlsx";
+        //工作薄对象
+        ExcelWriter workBook = EasyExcel.write("D:\\run\\template\\csyl\\target\\" 
+        + data.getProjectName() + ".xlsx")
+        .withTemplate(template).build();
+
+        //工作区对象
+        for (int i = 0; i < 3; i++) {
+            WriteSheet sheet = EasyExcel.writerSheet(i).build();
+            workBook.fill(data, sheet);
+            if (i > 1) {
+                workBook.fill(colDataList, sheet);
+            }
+        }
+       
+        workBook.finish();
+    }
+
+   
+
+    public static void main(String[] args) {
+        new GenerateTestCasesService().readSourceExcel();
+    }
+    
+}
