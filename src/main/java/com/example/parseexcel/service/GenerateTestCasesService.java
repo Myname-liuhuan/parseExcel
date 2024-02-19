@@ -84,13 +84,34 @@ public class GenerateTestCasesService {
                         String str =  cell==null? "":cell.toString();
                         beanMap.put(ExcelConstant.COLMAP.get(m), str);
                     }
-                    CSYLColDataEntity calData = JSON.parseObject(JSON.toJSONString(beanMap), CSYLColDataEntity.class);
-                    colDataList.add(calData);
+                    CSYLColDataEntity colData = JSON.parseObject(JSON.toJSONString(beanMap), CSYLColDataEntity.class);
+                    if (colData.getColId() == null || "".equals(colData.getColId())){
+                        continue;
+                    }
+                    String colId = org.springframework.util.StringUtils.trimAllWhitespace(colData.getColId()).toUpperCase();
+                    if (ExcelConstant.whiteSet.contains(colId)){
+                        colData.setCheckFlag(ExcelConstant.NO);
+                        colData.setTestDone(ExcelConstant.NA);
+                        colData.setCheckType(ExcelConstant.NA);
+                    }else{
+                        colData.setCheckFlag(ExcelConstant.YES);
+                        colData.setTestDone(ExcelConstant.OK);
+                        colData.setCheckType(ExcelConstant.CHECK_NUMBER);
+                    }
+                    //删除标记需要被验证
+                    if (colId.equalsIgnoreCase("DEL_FLAG")){
+                        colData.setCheckType(ExcelConstant.CHECK_VALUE_LIST);
+                    }
+                    //序号格式化
+                    colData.setColNo(String.valueOf(Double.valueOf(colData.getColNo())));
+
+                    colDataList.add(colData);
                 }
             }catch (Exception e) {
                e.printStackTrace();
             }
-
+            //最后加一行空
+            colDataList.add(new CSYLColDataEntity());
             compositeInsertion(data, colDataList, templatePath, outputPath);
         }
     }

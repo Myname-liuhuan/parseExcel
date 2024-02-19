@@ -1,8 +1,10 @@
 package com.example.parseexcel.common.constant;
 
 import java.util.Map;
+import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Sets;
 
 public class ExcelConstant {
     //表头开的行
@@ -35,5 +37,22 @@ public class ExcelConstant {
             .put(21, "sourceColVar")
             .put(22, "checkFlag")
             .build();
+
+    public static final Set<String> whiteSet = Sets.newHashSet("UPDATE_COUNT", "CREATE_TIME", "CREATE_BY"
+            , "CREATE_BY_NAME", "UPDATE_TIME", "UPDATE_BY", "UPDATE_BY_NAME", "REMARK");
+
+    public static final String YES = "是";
+    public static final String NO = "否";
+
+    public static final String OK = "OK";
+    public static final String NG = "NG";
+    public static final String NA = "N/A";
+
+    public static final String CHECK_NUMBER = "数量校验";
+    public static final String CHECK_VALUE_LIST = "值列表校验";
+    public static final String CHECK_SUM_NUMBER = "数字类型总计校验";
+    public static final String CHECK_OTHER = "其他校验";
+
+
 
 }
