@@ -43,13 +43,13 @@ public class GenerateTestCasesService {
 
         //先读取文件
         //String sourcePath = "D:\\svnsyc\\01_工程\\02_详细设计\\01_数据要件\\售后（正式版）\\03_售后保修";
-        //String sourcePath = "D:\\run\\template\\csyl\\source";
-        //String templatePath = "D:\\run\\template\\csyl\\template02.xlsx";
-        //String outputPath = "D:\\run\\template\\csyl\\target\\";
+        String sourcePath = "D:\\run\\template\\csyl\\source";
+        String templatePath = "D:\\run\\template\\csyl\\template02.xlsx";
+        String outputPath = "D:\\run\\template\\csyl\\target\\";
 
-        String sourcePath = "/Users/huanliu/Documents/ISPR/testfile/source/";
-        String templatePath = "/Users/huanliu/Documents/ISPR/testfile/template02.xlsx";
-        String outputPath = "/Users/huanliu/Documents/ISPR/testfile/target/";
+        // String sourcePath = "/Users/huanliu/Documents/ISPR/testfile/source/";
+        // String templatePath = "/Users/huanliu/Documents/ISPR/testfile/template02.xlsx";
+        // String outputPath = "/Users/huanliu/Documents/ISPR/testfile/target/";
 
         File directoryFile = new File(sourcePath);
         File[] files = directoryFile.listFiles();
@@ -65,13 +65,15 @@ public class GenerateTestCasesService {
             data.setShortProjectName("ST-06_业务数据测试用例");
             data.setProjectName("ST-06_业务数据测试用例" + StringUtils.cutString(file.getName()));
             data.setWriterName("刘欢");
-            data.setLastProjectName(StringUtils.cutLastString(file.getName()));
             
             //读取文件内容
             List<CSYLColDataEntity> colDataList = new ArrayList<>();
             try( InputStream in = new FileInputStream(file);
                 XSSFWorkbook xwb = new XSSFWorkbook(in);){
                 Sheet sheet = xwb.getSheetAt(ExcelConstant.SHEETINDEX);
+
+                //先读取头部信息
+
 
                 int rowEndIndex = sheet.getLastRowNum();
                 for (int i = ExcelConstant.ROWSTARTINDEX + 1; i <= rowEndIndex; i++){
@@ -85,9 +87,11 @@ public class GenerateTestCasesService {
                         beanMap.put(ExcelConstant.COLMAP.get(m), str);
                     }
                     CSYLColDataEntity colData = JSON.parseObject(JSON.toJSONString(beanMap), CSYLColDataEntity.class);
+                    //如果没有字段名称，则数据无意义
                     if (colData.getColId() == null || "".equals(colData.getColId())){
                         continue;
                     }
+
                     String colId = org.springframework.util.StringUtils.trimAllWhitespace(colData.getColId()).toUpperCase();
                     if (ExcelConstant.whiteSet.contains(colId)){
                         colData.setCheckFlag(ExcelConstant.NO);
@@ -102,9 +106,15 @@ public class GenerateTestCasesService {
                     if (colId.equalsIgnoreCase("DEL_FLAG")){
                         colData.setCheckType(ExcelConstant.CHECK_VALUE_LIST);
                     }
-                    //序号格式化
-                    colData.setColNo(String.valueOf(Double.valueOf(colData.getColNo())));
 
+                    String p = "[0-9]+(\\.)?[0-9]*";
+                    //序号格式化
+                    if(colData.getColNo().matches(p)){
+                        colData.setColNo(String.valueOf(Double.valueOf(colData.getColNo()).intValue()));
+                    }
+                    if (colData.getColByte().matches(p)) {
+                        colData.setColByte(String.valueOf(Double.valueOf(colData.getColByte()).intValue()));
+                    }
                     colDataList.add(colData);
                 }
             }catch (Exception e) {
@@ -140,6 +150,7 @@ public class GenerateTestCasesService {
 
     public static void main(String[] args) {
         new GenerateTestCasesService().readSourceExcel();
+        //System.out.println("29080".matches("[0-9]+(\\.)?[0-9]*"));
     }
     
 }

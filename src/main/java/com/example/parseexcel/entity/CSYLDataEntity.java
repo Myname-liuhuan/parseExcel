@@ -42,5 +42,17 @@ public class CSYLDataEntity {
      * sheet(2)
      * 表名(中文)
      */
-    String lastProjectName;
+    String tableNameZh;
+
+     /**
+     * sheet(2)
+     * 表名(英文)
+     */
+    String tableNameEn;
+
+     /**
+     * sheet(2)
+     * 源表名总和
+     */
+    String sourceTableNameAll;
 }
