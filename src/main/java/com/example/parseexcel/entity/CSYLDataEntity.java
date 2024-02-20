@@ -6,7 +6,7 @@ import lombok.Data;
  * 要件数据
  */
 @Data
-public class CSYLDataEntity {
+public class CSYLDataEntity implements Cloneable{
 
     /**
      * sheet(1) 下面的源文件名称
@@ -55,4 +55,15 @@ public class CSYLDataEntity {
      * 源表名总和
      */
     String sourceTableNameAll;
+
+    @Override
+    public Object clone(){
+        CSYLDataEntity csylDataEntity = null;
+        try {
+            csylDataEntity = (CSYLDataEntity) super.clone();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return csylDataEntity;
+    }
 }

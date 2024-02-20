@@ -10,6 +10,9 @@ public class ExcelConstant {
     //表头开的行
     public final static int ROWSTARTINDEX = 6;
 
+    //存储表头信息的行
+    public final static int HEAD_INFO_ROW_INDEX = 5;
+
     //要读取的sheet页
     public final static int SHEETINDEX = 2;
 

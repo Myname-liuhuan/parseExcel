@@ -45,6 +45,7 @@ public class GenerateTestCasesService {
         //String sourcePath = "D:\\svnsyc\\01_工程\\02_详细设计\\01_数据要件\\售后（正式版）\\03_售后保修";
         String sourcePath = "D:\\run\\template\\csyl\\source";
         String templatePath = "D:\\run\\template\\csyl\\template02.xlsx";
+        String templatePath2 = "D:\\run\\template\\csyl\\template03.xlsx";
         String outputPath = "D:\\run\\template\\csyl\\target\\";
 
         // String sourcePath = "/Users/huanliu/Documents/ISPR/testfile/source/";
@@ -65,64 +66,103 @@ public class GenerateTestCasesService {
             data.setShortProjectName("ST-06_业务数据测试用例");
             data.setProjectName("ST-06_业务数据测试用例" + StringUtils.cutString(file.getName()));
             data.setWriterName("刘欢");
+
+            CSYLDataEntity data2 = (CSYLDataEntity) data.clone();
+            //是否是二合一
+            boolean isTwo2One = false;
             
             //读取文件内容
             List<CSYLColDataEntity> colDataList = new ArrayList<>();
+            List<CSYLColDataEntity> colDataList2 = new ArrayList<>();
             try( InputStream in = new FileInputStream(file);
-                XSSFWorkbook xwb = new XSSFWorkbook(in);){
-                Sheet sheet = xwb.getSheetAt(ExcelConstant.SHEETINDEX);
-
-                //先读取头部信息
-
-
-                int rowEndIndex = sheet.getLastRowNum();
-                for (int i = ExcelConstant.ROWSTARTINDEX + 1; i <= rowEndIndex; i++){
-                    Row row = sheet.getRow(i);
-
-                    int colEndIndex = row.getLastCellNum();
-                    Map<String, Object> beanMap = new HashMap<>();
-                    for (int m = ExcelConstant.COLSTARTINDEX; m < colEndIndex; m++){
-                        Cell cell = row.getCell(m);
-                        String str =  cell==null? "":cell.toString();
-                        beanMap.put(ExcelConstant.COLMAP.get(m), str);
-                    }
-                    CSYLColDataEntity colData = JSON.parseObject(JSON.toJSONString(beanMap), CSYLColDataEntity.class);
-                    //如果没有字段名称，则数据无意义
-                    if (colData.getColId() == null || "".equals(colData.getColId())){
-                        continue;
-                    }
-
-                    String colId = org.springframework.util.StringUtils.trimAllWhitespace(colData.getColId()).toUpperCase();
-                    if (ExcelConstant.whiteSet.contains(colId)){
-                        colData.setCheckFlag(ExcelConstant.NO);
-                        colData.setTestDone(ExcelConstant.NA);
-                        colData.setCheckType(ExcelConstant.NA);
-                    }else{
-                        colData.setCheckFlag(ExcelConstant.YES);
-                        colData.setTestDone(ExcelConstant.OK);
-                        colData.setCheckType(ExcelConstant.CHECK_NUMBER);
-                    }
-                    //删除标记需要被验证
-                    if (colId.equalsIgnoreCase("DEL_FLAG")){
-                        colData.setCheckType(ExcelConstant.CHECK_VALUE_LIST);
-                    }
-
-                    String p = "[0-9]+(\\.)?[0-9]*";
-                    //序号格式化
-                    if(colData.getColNo().matches(p)){
-                        colData.setColNo(String.valueOf(Double.valueOf(colData.getColNo()).intValue()));
-                    }
-                    if (colData.getColByte().matches(p)) {
-                        colData.setColByte(String.valueOf(Double.valueOf(colData.getColByte()).intValue()));
-                    }
-                    colDataList.add(colData);
+                XSSFWorkbook xwb = new XSSFWorkbook(in)){
+                int tt = xwb.getNumberOfSheets();
+                if ( tt == 4) {
+                    isTwo2One = true;
                 }
+                //两次循环，匹配二合一要件
+                for(int n = ExcelConstant.SHEETINDEX; n < ExcelConstant.SHEETINDEX + 2; n++){
+                    if(!isTwo2One && n != ExcelConstant.SHEETINDEX){
+                        break;
+                    }
+                    Sheet sheet = xwb.getSheetAt(n);
+                    //先读取头部信息
+                    Row headRow = sheet.getRow(ExcelConstant.HEAD_INFO_ROW_INDEX);
+                    Cell enCell = headRow.getCell(9);
+                    String tableNameEn =  enCell==null? "":enCell.toString();
+                    Cell zhCell = headRow.getCell(13);
+                    String tableNameZh =  zhCell==null? "":zhCell.toString();
+                    Cell sourceTableNameAllCell = headRow.getCell(17);
+                    String sourceTableNameAll =  sourceTableNameAllCell==null? "":sourceTableNameAllCell.toString();
+                    if (n == ExcelConstant.SHEETINDEX) {
+                        data.setTableNameEn(tableNameEn);
+                        data.setTableNameZh(tableNameZh);
+                        data.setSourceTableNameAll(sourceTableNameAll);
+                    }else{
+                        data2.setTableNameEn(tableNameEn);
+                        data2.setTableNameZh(tableNameZh);
+                        data2.setSourceTableNameAll(sourceTableNameAll);
+                    }
+    
+                    int rowEndIndex = sheet.getLastRowNum();
+                    for (int i = ExcelConstant.ROWSTARTINDEX + 1; i <= rowEndIndex; i++){
+                        Row row = sheet.getRow(i);
+    
+                        int colEndIndex = row.getLastCellNum();
+                        Map<String, Object> beanMap = new HashMap<>();
+                        for (int m = ExcelConstant.COLSTARTINDEX; m < colEndIndex; m++){
+                            Cell cell = row.getCell(m);
+                            String str =  cell==null? "":cell.toString();
+                            beanMap.put(ExcelConstant.COLMAP.get(m), str);
+                        }
+                        CSYLColDataEntity colData = JSON.parseObject(JSON.toJSONString(beanMap), CSYLColDataEntity.class);
+                        //如果没有字段名称，则数据无意义
+                        if (colData.getColId() == null || "".equals(colData.getColId())){
+                            continue;
+                        }
+    
+                        String colId = org.springframework.util.StringUtils.trimAllWhitespace(colData.getColId()).toUpperCase();
+                        if (ExcelConstant.whiteSet.contains(colId)){
+                            colData.setCheckFlag(ExcelConstant.NO);
+                            colData.setTestDone(ExcelConstant.NA);
+                            colData.setCheckType(ExcelConstant.NA);
+                        }else{
+                            colData.setCheckFlag(ExcelConstant.YES);
+                            colData.setTestDone(ExcelConstant.OK);
+                            colData.setCheckType(ExcelConstant.CHECK_NUMBER);
+                        }
+                        //删除标记需要被验证
+                        if (colId.equalsIgnoreCase("DEL_FLAG")){
+                            colData.setCheckType(ExcelConstant.CHECK_VALUE_LIST);
+                        }
+    
+                        String p = "[0-9]+(\\.)?[0-9]*";
+                        //序号格式化
+                        if(colData.getColNo().matches(p)){
+                            colData.setColNo(String.valueOf(Double.valueOf(colData.getColNo()).intValue()));
+                        }
+                        if (colData.getColByte().matches(p)) {
+                            colData.setColByte(String.valueOf(Double.valueOf(colData.getColByte()).intValue()));
+                        }
+                        if (n == ExcelConstant.SHEETINDEX) {
+                            colDataList.add(colData);
+                        }else{
+                            colDataList2.add(colData);
+                        }
+                    }
+                }
+                
             }catch (Exception e) {
                e.printStackTrace();
             }
             //最后加一行空
             colDataList.add(new CSYLColDataEntity());
-            compositeInsertion(data, colDataList, templatePath, outputPath);
+            if (!isTwo2One) {
+                compositeInsertion(data, colDataList, templatePath, outputPath);
+            }else{
+                compositeInsertion(data, data2, colDataList,colDataList2, templatePath2, outputPath);
+            }
+           
         }
     }
 
@@ -141,6 +181,31 @@ public class GenerateTestCasesService {
             workBook.fill(data, sheet);
             if (i > 1) {
                 workBook.fill(colDataList, sheet);
+            }
+        }
+        workBook.finish();
+    }
+
+    /**
+     * excel复合生成(源数据二合一)
+     */
+    public void compositeInsertion(CSYLDataEntity data, CSYLDataEntity data2, List<CSYLColDataEntity> colDataList
+    ,List<CSYLColDataEntity> colDataList2,String templatePath, String outputPath){
+        //工作薄对象
+        ExcelWriter workBook = EasyExcel.write(outputPath + data.getProjectName() + ".xlsx")
+        .withTemplate(templatePath).build();
+
+        //工作区对象
+        for (int i = 0; i < 4; i++) {
+            WriteSheet sheet = EasyExcel.writerSheet(i).build();
+            if (i < 2) {
+                workBook.fill(data, sheet);
+            }else if (i == 2) {
+                workBook.fill(data, sheet);
+                workBook.fill(colDataList, sheet);
+            }else{
+                workBook.fill(data2, sheet);
+                workBook.fill(colDataList2, sheet);
             }
         }
         workBook.finish();
