@@ -19,10 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.annotation.format.DateTimeFormat;
-import com.alibaba.excel.write.builder.ExcelWriterBuilder;
 import com.alibaba.excel.write.metadata.WriteSheet;
-import com.alibaba.excel.write.metadata.fill.FillConfig;
 import com.alibaba.fastjson2.JSON;
 import com.example.parseexcel.common.constant.ExcelConstant;
 import com.example.parseexcel.common.utils.StringUtils;
@@ -122,6 +119,8 @@ public class GenerateTestCasesService {
                         }
     
                         String colId = org.springframework.util.StringUtils.trimAllWhitespace(colData.getColId()).toUpperCase();
+                        colData.setColId(colId);
+
                         if (ExcelConstant.whiteSet.contains(colId)){
                             colData.setCheckFlag(ExcelConstant.NO);
                             colData.setTestDone(ExcelConstant.NA);
