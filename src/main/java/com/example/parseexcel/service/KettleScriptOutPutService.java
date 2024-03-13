@@ -118,15 +118,15 @@ public class KettleScriptOutPutService {
     }
 
     public static void main(String[] args) {
-        // new KettleScriptOutPutService(null).defaultOutPut(
-        //         "SSC市场处置活动车辆清单-VIN",
-        //         "t_wty_ssc_vehicle_item_vin",
-        //         "srv_ssc_m_middle4");
+        new KettleScriptOutPutService(null).defaultOutPut(
+                "零件保修_保修证据发送表",
+                "t_wty_warranty_file",
+                "srv_warrantyfile_m_middle2");
 
-        new KettleScriptOutPutService(null).outPut1(
-            "零件保修_WCSR记录进口车TWC数据",
-            "t_wty_wcsr_twc",
-            "srv_wcsrtwc_f_middle3");
+        // new KettleScriptOutPutService(null).outPut1(
+        //     "零件保修_STWCWCAR求偿请款单详情",
+        //     "t_wty_stwc_wcar_detail",
+        //     "srv_wcarstwc_f_middle");
     }
 
 }

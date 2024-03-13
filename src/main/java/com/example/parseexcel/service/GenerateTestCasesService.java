@@ -60,11 +60,11 @@ public class GenerateTestCasesService {
             DateTimeFormatter dtfer = DateTimeFormatter.ofPattern("yyyy/MM/dd");
             data.setCreateDate(sourcePath);
             data.setCreateDate(dtfer.format(LocalDate.now()));
-            //String title = "ST-06_业务数据测试用例";
-            String title = "ST-05_基础数据测试用例";
+            String title = "ST-06_业务数据测试用例";
+            // /String title = "ST-05_基础数据测试用例";
             data.setShortProjectName(title);
             data.setProjectName(title + StringUtils.cutString(file.getName()));
-            data.setWriterName("李华");
+            data.setWriterName("刘欢");
 
             CSYLDataEntity data2 = (CSYLDataEntity) data.clone();
             //是否是二合一
