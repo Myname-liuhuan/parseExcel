@@ -67,7 +67,7 @@ public class KettleTestScriptOutPutService {
             "\n)";
         
         //值列表校验
-        String dataStr3 = "";
+        String dataStr3 = "-- 值列表校验\n";
         for (Entry<String, String> entry : valueMap.entrySet()) {
             dataStr3 += String.format(templateStr3, entry.getValue(), entry.getValue(), databaseName, targetTableName, entry.getKey(), entry.getValue(), middleTableName, entry.getKey());
         }
@@ -101,7 +101,7 @@ public class KettleTestScriptOutPutService {
                                 Map<String, String> countMap, Map<String, String> valueMap){
         String outputDir = KettleConstant.WINDOW_OUTPUT_TEST_PATH + filename + "/";
         File file = new File(outputDir);
-        if (file.exists()) {
+        if (!file.exists()) {
             file.mkdirs();
         }
         //读取模板文件
@@ -121,17 +121,19 @@ public class KettleTestScriptOutPutService {
 
         Map<String, String> countMap = new TreeMap<>();
         countMap.put("dms_id", "ID");
-        countMap.put("vin", "VINNO");
-        countMap.put("model", "VEHICLE_MODEL_CODE");
-        countMap.put("dealercode", "SOLD_FROM_DEALER_CODE");
+        countMap.put("WTY_INFO_SUMMARY_ID", "WTY_INFO_SUMMARY_ID");
+        countMap.put("LICENSE_PLATE_NUMBER", "LICENSE_PLATE_NUMBER");
+        countMap.put("PART_WTY_TYPE", "PART_WTY_TYPE");
+        countMap.put("srvcode", "OPEM");
+        countMap.put("partscode", "PART_NO");
+        countMap.put("partsname", "PART_NAME");
         countMap.put("repairtime", "ACCRUED_SERVICE_DAY");
         countMap.put("repaircount", "ACCRUED_SERVICE_COUNT");
-
+        countMap.put("dealercode", "SERVICE_DEALER_CODE");
 
         Map<String, String> valueMap = new TreeMap<>();
         valueMap.put("DELETEFLAG", "DEL_FLAG");
-        valueMap.put("PART_WTY_TYPE", "PART_WTY_TYPE");
-        valueMap.put("WTY_PERIOD_STATUS", "WTY_PERIOD_STATUS");
+
 
         
     }
