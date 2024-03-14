@@ -76,7 +76,16 @@ public class KettleTestScriptOutPutService {
     }
 
     public String autoTargetSql(String databaseName, String targetTableName, Map<String, String> countMap, Map<String, String> valueMap){
-        return autoMiddleSql(databaseName, targetTableName, targetTableName, countMap, valueMap);
+        Map<String, String> targetCountMap = new TreeMap<>();
+        Map<String, String> targetValueMap = new TreeMap<>();
+        for(String value : countMap.values()){
+            targetCountMap.put(value, value);
+        }
+        for(String value : valueMap.values()){
+            targetValueMap.put(value, value);
+        }
+
+        return autoMiddleSql(databaseName, targetTableName, targetTableName, targetCountMap, targetValueMap);
     }
 
     /**
@@ -100,7 +109,9 @@ public class KettleTestScriptOutPutService {
         //修改模板中数据
         text = text.replaceAll("SCRIPT_NAME", filename)
                    .replaceAll("MIDDLE_SQL", autoMiddleSql(databaseName, middleTableName, targetTableName, countMap, valueMap) )
-                   .replaceAll("TARGET_SQL", autoTargetSql(databaseName, targetTableName, countMap, valueMap));
+                   .replaceAll("TARGET_SQL", autoTargetSql(databaseName, targetTableName, countMap, valueMap))
+                   .replaceAll("DB_NAME", databaseName)
+                   .replaceAll("TB_NAME",targetTableName);
 
         FileContentUtil.outputFile(text, outputDir, filename + ".ktr");
     }
@@ -112,16 +123,17 @@ public class KettleTestScriptOutPutService {
         countMap.put("dms_id", "ID");
         countMap.put("vin", "VINNO");
         countMap.put("model", "VEHICLE_MODEL_CODE");
+        countMap.put("dealercode", "SOLD_FROM_DEALER_CODE");
+        countMap.put("repairtime", "ACCRUED_SERVICE_DAY");
+        countMap.put("repaircount", "ACCRUED_SERVICE_COUNT");
+
 
         Map<String, String> valueMap = new TreeMap<>();
-        valueMap.put("DELETEFLAG", "del_flag");
+        valueMap.put("DELETEFLAG", "DEL_FLAG");
+        valueMap.put("PART_WTY_TYPE", "PART_WTY_TYPE");
+        valueMap.put("WTY_PERIOD_STATUS", "WTY_PERIOD_STATUS");
 
-        new KettleTestScriptOutPutService()
-            .outPutCheckScript("车辆三包维修信息汇总（下沉共通组）", 
-            "infra-dms-wty", 
-            "srv_threesoldvehicle_m_middle2",
-            "t_wty_vehicle_wty_info_summary", 
-             countMap, valueMap);
+        
     }
     
 }

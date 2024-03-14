@@ -584,7 +584,7 @@
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
     <quoteString>N</quoteString>
-    <sql>DELETE FROM data_validation_log	WHERE database_name='infra-dms-wty' AND table_name='t_wty_ssc'</sql>
+    <sql>DELETE FROM data_validation_log	WHERE database_name='DB_NAME' AND table_name='TB_NAME'</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
