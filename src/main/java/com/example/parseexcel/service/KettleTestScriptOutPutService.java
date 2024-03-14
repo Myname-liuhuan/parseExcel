@@ -1,10 +1,14 @@
 package com.example.parseexcel.service;
 
+import java.io.File;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
 import org.springframework.stereotype.Service;
+
+import com.example.parseexcel.common.constant.KettleConstant;
+import com.example.parseexcel.common.utils.FileContentUtil;
 
 @Service
 public class KettleTestScriptOutPutService {
@@ -75,16 +79,49 @@ public class KettleTestScriptOutPutService {
         return autoMiddleSql(databaseName, targetTableName, targetTableName, countMap, valueMap);
     }
 
+    /**
+     * 输出验证脚本文件
+     * @param filename
+     * @param databaseName
+     * @param middleTableName
+     * @param targetTableName
+     * @param countMap
+     * @param valueMap
+     */
+    public void outPutCheckScript(String filename, String databaseName, String middleTableName,String targetTableName, 
+                                Map<String, String> countMap, Map<String, String> valueMap){
+        String outputDir = KettleConstant.WINDOW_OUTPUT_TEST_PATH + filename + "/";
+        File file = new File(outputDir);
+        if (file.exists()) {
+            file.mkdirs();
+        }
+        //读取模板文件
+        String text = FileContentUtil.readByClazz(this.getClass(), KettleConstant.SCRIPT_CHECK_PATH);
+        //修改模板中数据
+        text = text.replaceAll("SCRIPT_NAME", filename)
+                   .replaceAll("MIDDLE_SQL", autoMiddleSql(databaseName, middleTableName, targetTableName, countMap, valueMap) )
+                   .replaceAll("TARGET_SQL", autoTargetSql(databaseName, targetTableName, countMap, valueMap));
+
+        FileContentUtil.outputFile(text, outputDir, filename + ".ktr");
+    }
+
+
     public static void main(String[] args) {
-        Map<String, String> map = new TreeMap<>();
-        map.put("dms_id", "ID");
-        map.put("ssc_public_id", "SSC_PUBLIC_ID");
-        map.put("SSCCODE", "SSC_CODE");
+
+        Map<String, String> countMap = new TreeMap<>();
+        countMap.put("dms_id", "ID");
+        countMap.put("vin", "VINNO");
+        countMap.put("model", "VEHICLE_MODEL_CODE");
 
         Map<String, String> valueMap = new TreeMap<>();
         valueMap.put("DELETEFLAG", "del_flag");
 
-        System.out.println(new KettleTestScriptOutPutService().autoMiddleSql("infra-dms-wty", "srv_ssc_m_middle", "t_wty_ssc", map, valueMap)); 
+        new KettleTestScriptOutPutService()
+            .outPutCheckScript("车辆三包维修信息汇总（下沉共通组）", 
+            "infra-dms-wty", 
+            "srv_threesoldvehicle_m_middle2",
+            "t_wty_vehicle_wty_info_summary", 
+             countMap, valueMap);
     }
     
 }
