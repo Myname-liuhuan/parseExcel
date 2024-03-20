@@ -648,11 +648,8 @@
     </partitioning>
     <connection>oracle_after_sales</connection>
     <sql>SELECT
-	t.*,
-	m.dms_id AS ssc_public_id,
-	m.recall_notice_name AS ssc_public_name
-FROM MiddleTableName t
-LEFT JOIN srv_sscshort_recall_notice m ON t.ssccode = m.recall_notice_code</sql>
+	*
+FROM MiddleTableName </sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
