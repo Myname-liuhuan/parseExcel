@@ -85,7 +85,7 @@ public class KettleTestScriptOutPutService {
             targetValueMap.put(value, value);
         }
 
-        return autoMiddleSql(databaseName, targetTableName, targetTableName, targetCountMap, targetValueMap);
+        return autoMiddleSql(databaseName, targetTableName, targetTableName, targetCountMap, targetValueMap).replaceAll("原数据库", "目标数据库");
     }
 
     /**
@@ -121,20 +121,26 @@ public class KettleTestScriptOutPutService {
 
         Map<String, String> countMap = new TreeMap<>();
         countMap.put("dms_id", "ID");
-        countMap.put("WTY_INFO_SUMMARY_ID", "WTY_INFO_SUMMARY_ID");
-        countMap.put("LICENSE_PLATE_NUMBER", "LICENSE_PLATE_NUMBER");
-        countMap.put("PART_WTY_TYPE", "PART_WTY_TYPE");
-        countMap.put("srvcode", "OPEM");
-        countMap.put("partscode", "PART_NO");
-        countMap.put("partsname", "PART_NAME");
-        countMap.put("repairtime", "ACCRUED_SERVICE_DAY");
-        countMap.put("repaircount", "ACCRUED_SERVICE_COUNT");
-        countMap.put("dealercode", "SERVICE_DEALER_CODE");
+        countMap.put("DISTRIBUTER", " DIST_CODE");
+        countMap.put("VENDERCODE", "VENDER_CODE");
+        countMap.put("WMI", "WMI");
+        countMap.put("VDS", "VDS");
+        countMap.put("VISSTART", "VIS_START");
+        countMap.put("VISEND", "VIS_END");
+        countMap.put("modelname", "MODEL_FINANCIAL_CODE");
+        countMap.put("CKDFLAG", "CKD_FLAG");
+        countMap.put("CKDFLAG", "CKD_FLAG");
+        countMap.put("modelname", "VEHICLE_NAME_CODE");
+        countMap.put("FRANCHISECODE", "FRANCHISE_CODE");
+        countMap.put("switchdate", "SWITCH_DATE");
+        countMap.put("partspriceflag", "PARTS_PRICE_FLAG");
+    
 
         Map<String, String> valueMap = new TreeMap<>();
         valueMap.put("DELETEFLAG", "DEL_FLAG");
+        valueMap.put("DELETEFLAG", "VEHICLE_STATUS");
 
-
+        
         
     }
     
