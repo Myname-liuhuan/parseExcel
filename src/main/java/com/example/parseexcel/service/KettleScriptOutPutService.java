@@ -97,6 +97,26 @@ public class KettleScriptOutPutService {
     }
 
     /**
+     * oracle脚本输出
+     * @param scriptName
+     * @param targetTableName
+     * @param middleTableName
+     */
+    private void oracleOutPut(String scriptName, String targetTableName, String middleTableName){
+        Map<String, String> scriptNameMap = new HashMap<>();
+        scriptNameMap.put("ORACLE_" + KettleConstant.SCRIPT_NAME_WORK, scriptName + ".kjb");
+        scriptNameMap.put("ORACLE_" + KettleConstant.SCRIPT_NAME_TRANS01, scriptName + "01.ktr");
+        scriptNameMap.put("ORACLE_" + KettleConstant.SCRIPT_NAME_TRANS02, scriptName + "02.ktr");
+        scriptNameMap.put("ORACLE_" + KettleConstant.SCRIPT_NAME_TRANS03, scriptName + "03.ktr");
+        scriptNameMap.put("ORACLE_" + KettleConstant.SCRIPT_NAME_TRANS04, scriptName + "04.ktr");
+        Map<String, String>  replaceMap = new HashMap<>();
+        replaceMap.put(KettleConstant.SCRIPT_NAME, scriptName);
+        replaceMap.put(KettleConstant.TARGET_TABLE_NAME, targetTableName);
+        replaceMap.put(KettleConstant.MIDDLE_TABLE_NAME, middleTableName);
+        outPutScriptNoSpring("", scriptName, targetTableName, replaceMap, scriptNameMap);
+    }
+
+    /**
      * 一个作业五个转换（历史表）
      * @param scriptName
      * @param targetTableName
@@ -118,15 +138,7 @@ public class KettleScriptOutPutService {
     }
 
     public static void main(String[] args) {
-        new KettleScriptOutPutService(null).defaultOutPut(
-                "零件保修_保修证据发送表",
-                "t_wty_warranty_file",
-                "srv_warrantyfile_m_middle2");
-
-        // new KettleScriptOutPutService(null).outPut1(
-        //     "零件保修_STWCWCAR求偿请款单详情",
-        //     "t_wty_stwc_wcar_detail",
-        //     "srv_wcarstwc_f_middle");
+       
     }
 
 }
