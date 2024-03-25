@@ -76,6 +76,11 @@ public class KettleConstant {
     public static final String WINDOW_OUTPUT_PATH_SUB = "售后/售后保修/";
 
     /**
+     * 输出次级目录 oracle
+     */
+    public static final String WINDOW_OUTPUT_PATH_SUB_ORACLE = "售后（Oracle）/售后保修/";
+
+    /**
      * 验证脚本文件输出目录
      */
     public static final String WINDOW_OUTPUT_TEST_PATH = WINDOW_OUTPUT_PATH  + "售后/测试脚本/售后保修/";
