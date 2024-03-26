@@ -607,7 +607,7 @@
       <description/>
       <type>SQL</type>
       <attributes/>
-      <sql>truncate TargetTableName;</sql>
+      <sql> DELETE FROM   TargetTableName   WHERE ID LIKE '2024%'</sql>
       <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
