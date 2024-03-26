@@ -591,7 +591,7 @@
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${file_path}/SubPathScriptName/TargetTableName/ScriptName.csv</name>
+      <name>${Internal.Entry.Current.Directory}/ScriptName.csv</name>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>Y</do_not_open_new_file_init>
       <extention/>
