@@ -18,7 +18,7 @@ public class KettleOutPutController {
     @Autowired
     KettleScriptOutPutService kettleScriptOutPutService;
 
-    public ResponseEntity<byte[]> outPutScript(){
+    public ResponseEntity<byte[]> outPutScript(Integer templateId, String middleName){
 
         return null;
     }
