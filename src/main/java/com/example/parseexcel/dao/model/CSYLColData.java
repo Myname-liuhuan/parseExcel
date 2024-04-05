@@ -1,4 +1,4 @@
-package com.example.parseexcel.entity;
+package com.example.parseexcel.dao.model;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import lombok.Data;
  * 每行数据
  */
 @Data
-public class CSYLColDataEntity {
+public class CSYLColData {
     
     String colNo;
 

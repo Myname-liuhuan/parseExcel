@@ -1,4 +1,4 @@
-package com.example.parseexcel.entity;
+package com.example.parseexcel.dao.model;
 
 import lombok.Data;
 

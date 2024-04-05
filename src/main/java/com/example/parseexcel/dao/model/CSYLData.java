@@ -1,4 +1,4 @@
-package com.example.parseexcel.entity;
+package com.example.parseexcel.dao.model;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import lombok.Data;
  * 要件数据
  */
 @Data
-public class CSYLDataEntity implements Cloneable{
+public class CSYLData implements Cloneable{
 
     /**
      * sheet(1) 下面的源文件名称
@@ -58,12 +58,12 @@ public class CSYLDataEntity implements Cloneable{
 
     @Override
     public Object clone(){
-        CSYLDataEntity csylDataEntity = null;
+        CSYLData csylData = null;
         try {
-            csylDataEntity = (CSYLDataEntity) super.clone();
+            csylData = (CSYLData) super.clone();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return csylDataEntity;
+        return csylData;
     }
 }

@@ -3,7 +3,6 @@ package com.example.parseexcel.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,8 +22,8 @@ import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson2.JSON;
 import com.example.parseexcel.common.constant.ExcelConstant;
 import com.example.parseexcel.common.utils.StringUtils;
-import com.example.parseexcel.entity.CSYLColDataEntity;
-import com.example.parseexcel.entity.CSYLDataEntity;
+import com.example.parseexcel.dao.model.CSYLColData;
+import com.example.parseexcel.dao.model.CSYLData;
 
 /**
  * 测试用例生成逻辑
@@ -55,7 +54,7 @@ public class GenerateTestCasesService {
             if (file.isHidden()){
                 continue;
             }
-            CSYLDataEntity data = new CSYLDataEntity();
+            CSYLData data = new CSYLData();
             data.setSourceFileName(file.getName());
             DateTimeFormatter dtfer = DateTimeFormatter.ofPattern("yyyy/MM/dd");
             data.setCreateDate(sourcePath);
@@ -66,13 +65,13 @@ public class GenerateTestCasesService {
             data.setProjectName(title + StringUtils.cutString(file.getName()));
             data.setWriterName("刘欢");
 
-            CSYLDataEntity data2 = (CSYLDataEntity) data.clone();
+            CSYLData data2 = (CSYLData) data.clone();
             //是否是二合一
             boolean isTwo2One = false;
             
             //读取文件内容
-            List<CSYLColDataEntity> colDataList = new ArrayList<>();
-            List<CSYLColDataEntity> colDataList2 = new ArrayList<>();
+            List<CSYLColData> colDataList = new ArrayList<>();
+            List<CSYLColData> colDataList2 = new ArrayList<>();
             try( InputStream in = new FileInputStream(file);
                 XSSFWorkbook xwb = new XSSFWorkbook(in)){
                 int tt = xwb.getNumberOfSheets();
@@ -114,7 +113,7 @@ public class GenerateTestCasesService {
                             String str =  cell==null? "":cell.toString();
                             beanMap.put(ExcelConstant.COLMAP.get(m), str);
                         }
-                        CSYLColDataEntity colData = JSON.parseObject(JSON.toJSONString(beanMap), CSYLColDataEntity.class);
+                        CSYLColData colData = JSON.parseObject(JSON.toJSONString(beanMap), CSYLColData.class);
                         //如果没有字段名称，则数据无意义
                         if (colData.getColId() == null || "".equals(colData.getColId())){
                             continue;
@@ -157,7 +156,7 @@ public class GenerateTestCasesService {
                e.printStackTrace();
             }
             //最后加一行空
-            colDataList.add(new CSYLColDataEntity());
+            colDataList.add(new CSYLColData());
             if (!isTwo2One) {
                 compositeInsertion(data, colDataList, templatePath, outputPath);
             }else{
@@ -170,7 +169,7 @@ public class GenerateTestCasesService {
     /**
      * excel复合生成
      */
-    public void compositeInsertion(CSYLDataEntity data, List<CSYLColDataEntity> colDataList,
+    public void compositeInsertion(CSYLData data, List<CSYLColData> colDataList,
                                    String templatePath, String outputPath){
         //工作薄对象
         ExcelWriter workBook = EasyExcel.write(outputPath + data.getProjectName() + ".xlsx")
@@ -190,8 +189,8 @@ public class GenerateTestCasesService {
     /**
      * excel复合生成(源数据二合一)
      */
-    public void compositeInsertion(CSYLDataEntity data, CSYLDataEntity data2, List<CSYLColDataEntity> colDataList
-    ,List<CSYLColDataEntity> colDataList2,String templatePath, String outputPath){
+    public void compositeInsertion(CSYLData data, CSYLData data2, List<CSYLColData> colDataList
+    , List<CSYLColData> colDataList2, String templatePath, String outputPath){
         //工作薄对象
         ExcelWriter workBook = EasyExcel.write(outputPath + data.getProjectName() + ".xlsx")
         .withTemplate(templatePath).build();
