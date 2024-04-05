@@ -25,5 +25,10 @@ kettle:
   output:
     path: ~/Documents/ISPR/kettle_file/售后/售后保修/
 
+# MyBatis配置
+mybatis-plus:
+  mapper-locations: classpath*:/mappers/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
 
 
