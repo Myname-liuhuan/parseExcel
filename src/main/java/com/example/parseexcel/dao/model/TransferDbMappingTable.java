@@ -8,7 +8,7 @@ import lombok.Data;
  * @date 2024/4/5
  */
 @Data
-public class TransferDbMapping {
+public class TransferDbMappingTable {
 
     /**
      * 中间表名称
