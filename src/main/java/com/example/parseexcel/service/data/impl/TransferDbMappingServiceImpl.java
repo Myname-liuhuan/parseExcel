@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.parseexcel.dao.TransferDbMappingTableMapping;
 import com.example.parseexcel.dao.dto.TransferDbMappingTableDTO;
 import com.example.parseexcel.dao.model.TransferDbMappingTable;
+import com.example.parseexcel.dao.vo.TransferDbMappingTableVO;
 import com.example.parseexcel.service.data.TransferDbMappingService;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,5 +38,13 @@ public class TransferDbMappingServiceImpl implements TransferDbMappingService {
         QueryWrapper<TransferDbMappingTable> queryWrapper = new QueryWrapper<>();
         queryWrapper.allEq(queryMap);
         return  transferDbMappingTableMapping.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<TransferDbMappingTableVO> listAll() {
+        List<TransferDbMappingTableVO> volist = new ArrayList<>();
+        List<TransferDbMappingTable> list = transferDbMappingTableMapping.selectList(null);
+        BeanUtils.copyProperties(list, volist);
+        return  volist;
     }
 }

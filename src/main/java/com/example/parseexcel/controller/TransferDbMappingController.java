@@ -2,6 +2,7 @@ package com.example.parseexcel.controller;
 
 import com.example.parseexcel.dao.dto.TransferDbMappingTableDTO;
 import com.example.parseexcel.dao.model.TransferDbMappingTable;
+import com.example.parseexcel.dao.vo.TransferDbMappingTableVO;
 import com.example.parseexcel.service.data.TransferDbMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,5 +29,14 @@ public class TransferDbMappingController {
     @ResponseBody
     public List<TransferDbMappingTable> list(TransferDbMappingTableDTO transferDbMappingTableDTO){
         return transferDbMappingService.list(transferDbMappingTableDTO);
+    }
+
+    /**
+     * 列表查询所有
+     */
+    @RequestMapping("/listAll")
+    @ResponseBody
+    public List<TransferDbMappingTableVO> listAll(){
+        return transferDbMappingService.listAll();
     }
 }

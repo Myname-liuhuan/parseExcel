@@ -1,5 +1,7 @@
 package com.example.parseexcel.dao.model;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import lombok.Data;
 
 /**
@@ -8,6 +10,7 @@ import lombok.Data;
  * @date 2024/4/5
  */
 @Data
+@TableName("transfer_db_mapping")
 public class TransferDbMappingTable {
 
     /**
