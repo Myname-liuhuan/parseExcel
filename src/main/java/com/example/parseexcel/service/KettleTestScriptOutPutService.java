@@ -5,63 +5,16 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
-import org.springframework.stereotype.Service;
-
 import com.example.parseexcel.common.constant.KettleConstant;
+import com.example.parseexcel.common.constant.KettleTestScriptConstant;
 import com.example.parseexcel.common.utils.FileContentUtil;
 
-@Service
+/**
+ * 纯Java语法不带spring
+ */
 public class KettleTestScriptOutPutService {
 
-    String templateStr = "count(t.%s) AS %s, -- %s\n" ;
-	String templateStr2 = "\n-- id\n" + 
-                "SELECT\n" + 
-                "'%s' AS column_name,\n" + 
-                " %s AS count,\n" + 
-                "'%s' AS database_name,\n" + 
-                "'%s' AS table_name,\n" + 
-                "'数量校验' AS check_type,\n" + 
-                "'原数据库' AS data_type\n" + 
-                "FROM\n" + 
-                "  temp_table\n"  + 
-                "UNION ALL";
-
-    /**
-     * oracle语法
-     */
-    String templateStr3 = "\nUNION ALL\n" + 
-                "SELECT\n" + 
-                "CONCAT('%s','_', IFNULL(%s,'null')) AS 'column_name',\r\n" + 
-                "count AS 'count',\r\n" + 
-                "'%s' AS 'database_name',\n" + 
-                "'%s' AS 'table_name',\n" + 
-                "'值列表校验' AS 'check_type',\n" + 
-                "'原数据库' AS 'data_type'\n" + 
-                "FROM (\n" + 
-                "SELECT\n" + 
-                "%s AS %s,\n" + 
-                "count(*) AS 'count'\n" + 
-                "FROM %s GROUP BY %s\n" + 
-                ") AS m";
-
-    /**
-     * mysql语法
-     */
-    String templateStr4 = "\nUNION ALL\n" + 
-                "SELECT\n" + 
-                "('%s' || '_' || NVL(TO_CHAR(%s),'null')) AS column_name,\r\n" + 
-                "count AS count,\r\n" + 
-                "'%s' AS database_name,\n" + 
-                "'%s' AS table_name,\n" + 
-                "'值列表校验' AS check_type,\n" + 
-                "'原数据库' AS data_type\n" + 
-                "FROM (\n" + 
-                "SELECT\n" + 
-                "%s AS %s,\n" + 
-                "count(*) AS count\n" + 
-                "FROM %s GROUP BY %s\n" + 
-                ") ";
-
+    
 
     /**
      * 数量校验
@@ -75,8 +28,8 @@ public class KettleTestScriptOutPutService {
         String dataStr = "";
         String dataStr2 = "";
         for(Entry<String, String> entry : countMap.entrySet()){
-            dataStr += String.format(templateStr, entry.getKey(), entry.getValue(),entry.getValue());
-            dataStr2 += String.format(templateStr2, entry.getValue(),entry.getValue()
+            dataStr += String.format(KettleTestScriptConstant.TEMPLATE_STR, entry.getKey(), entry.getValue(),entry.getValue());
+            dataStr2 += String.format(KettleTestScriptConstant.TEMPLATE_STR2, entry.getValue(),entry.getValue()
                         , databaseName, targetTableName);
         }
         //处理最后的 UNION ALL
@@ -101,7 +54,7 @@ public class KettleTestScriptOutPutService {
     private String valueListCheck(String databaseName, String middleTableName,String targetTableName, Map<String, String> valueMap){
         String dataStr3 = "-- 值列表校验\n";
         for (Entry<String, String> entry : valueMap.entrySet()) {
-            dataStr3 += String.format(templateStr3, entry.getValue(), entry.getValue(), databaseName, targetTableName, entry.getKey(), entry.getValue(), middleTableName, entry.getKey());
+            dataStr3 += String.format(KettleTestScriptConstant.TEMPLATE_STR3, entry.getValue(), entry.getValue(), databaseName, targetTableName, entry.getKey(), entry.getValue(), middleTableName, entry.getKey());
         }
         return dataStr3;
     }
@@ -117,7 +70,7 @@ public class KettleTestScriptOutPutService {
     private String valueListCheckOracle(String databaseName, String middleTableName,String targetTableName, Map<String, String> valueMap){
         String dataStr4 = "-- 值列表校验\n";
         for (Entry<String, String> entry : valueMap.entrySet()) {
-            dataStr4 += String.format(templateStr4, entry.getValue(), entry.getValue(), databaseName, targetTableName, entry.getKey(), entry.getValue(), middleTableName, entry.getKey());
+            dataStr4 += String.format(KettleTestScriptConstant.TEMPLATE_STR4, entry.getValue(), entry.getValue(), databaseName, targetTableName, entry.getKey(), entry.getValue(), middleTableName, entry.getKey());
         }
         return dataStr4;
     }
@@ -179,7 +132,7 @@ public class KettleTestScriptOutPutService {
 
     public static void main(String[] args) {
 
-       
+  
         
     }
     
