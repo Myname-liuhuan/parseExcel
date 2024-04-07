@@ -44,7 +44,12 @@ public class TransferDbMappingServiceImpl implements TransferDbMappingService {
     public List<TransferDbMappingTableVO> listAll() {
         List<TransferDbMappingTableVO> volist = new ArrayList<>();
         List<TransferDbMappingTable> list = transferDbMappingTableMapping.selectList(null);
-        BeanUtils.copyProperties(list, volist);
+        for (TransferDbMappingTable transferDbMappingTable : list) {
+            TransferDbMappingTableVO vo = new TransferDbMappingTableVO();
+            BeanUtils.copyProperties(transferDbMappingTable, vo);
+            volist.add(vo);
+        }
+        
         return  volist;
     }
 }
