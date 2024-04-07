@@ -19,6 +19,7 @@
         <druid.version>1.2.22</druid.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <mybatis.plus.version>3.4.2</mybatis.plus.version>
+        <beanutils.version>1.9.4</beanutils.version>
     </properties>
     <dependencies>
         <!--web启动器-->
@@ -50,6 +51,12 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis.plus.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${beanutils.version}</version>
         </dependency>
 
 
