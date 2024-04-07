@@ -63,6 +63,7 @@ public class KettleConstant {
      * 验证脚本模板文件名称
      */
     public static final String SCRIPT_CHECK_PATH = TEMPLATE_PATH_NO_SPRING + "CheckScript.ktr";
+    public static final String SCRIPT_CHECK_PATH_ORACLE = TEMPLATE_PATH_NO_SPRING + "ORACLE_CheckScript.ktr";
 
 
     /**
@@ -84,5 +85,6 @@ public class KettleConstant {
      * 验证脚本文件输出目录
      */
     public static final String WINDOW_OUTPUT_TEST_PATH = WINDOW_OUTPUT_PATH  + "售后/测试脚本/售后保修/";
+    public static final String WINDOW_OUTPUT_TEST_PATH_ORACLE = WINDOW_OUTPUT_PATH  + "售后（Oracle）/测试脚本/售后保修/";
 
 }

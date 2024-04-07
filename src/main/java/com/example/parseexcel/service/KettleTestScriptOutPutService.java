@@ -13,19 +13,22 @@ import com.example.parseexcel.common.utils.FileContentUtil;
 @Service
 public class KettleTestScriptOutPutService {
 
-    String templateStr = "count(t.%s) AS '%s', -- %s\n" ;
+    String templateStr = "count(t.%s) AS %s, -- %s\n" ;
 	String templateStr2 = "\n-- id\n" + 
                 "SELECT\n" + 
-                "'%s' AS 'column_name',\n" + 
-                " %s AS 'count',\n" + 
-                "'%s' AS 'database_name',\n" + 
-                "'%s' AS 'table_name',\n" + 
-                "'数量校验' AS 'check_type',\n" + 
-                "'原数据库' AS 'data_type'\n" + 
+                "'%s' AS column_name,\n" + 
+                " %s AS count,\n" + 
+                "'%s' AS database_name,\n" + 
+                "'%s' AS table_name,\n" + 
+                "'数量校验' AS check_type,\n" + 
+                "'原数据库' AS data_type\n" + 
                 "FROM\n" + 
                 "  temp_table\n"  + 
                 "UNION ALL";
 
+    /**
+     * oracle语法
+     */
     String templateStr3 = "\nUNION ALL\n" + 
                 "SELECT\n" + 
                 "CONCAT('%s','_', IFNULL(%s,'null')) AS 'column_name',\r\n" + 
@@ -40,16 +43,35 @@ public class KettleTestScriptOutPutService {
                 "count(*) AS 'count'\n" + 
                 "FROM %s GROUP BY %s\n" + 
                 ") AS m";
+
     /**
-     * 
-     * @param databaseName 目标数据库名称
-     * @param middleTableName 中间表名称
-     * @param targetTableName 目标表名称
-     * @param countMap 数量校验
-     * @param valueMap 值列表校验
+     * mysql语法
+     */
+    String templateStr4 = "\nUNION ALL\n" + 
+                "SELECT\n" + 
+                "('%s' || '_' || NVL(TO_CHAR(%s),'null')) AS column_name,\r\n" + 
+                "count AS count,\r\n" + 
+                "'%s' AS database_name,\n" + 
+                "'%s' AS table_name,\n" + 
+                "'值列表校验' AS check_type,\n" + 
+                "'原数据库' AS data_type\n" + 
+                "FROM (\n" + 
+                "SELECT\n" + 
+                "%s AS %s,\n" + 
+                "count(*) AS count\n" + 
+                "FROM %s GROUP BY %s\n" + 
+                ") ";
+
+
+    /**
+     * 数量校验
+     * @param databaseName
+     * @param middleTableName
+     * @param targetTableName
+     * @param countMap
      * @return
      */
-    public String autoMiddleSql(String databaseName, String middleTableName,String targetTableName, Map<String, String> countMap, Map<String, String> valueMap){
+    private String countCheck(String databaseName, String middleTableName,String targetTableName, Map<String, String> countMap){
         String dataStr = "";
         String dataStr2 = "";
         for(Entry<String, String> entry : countMap.entrySet()){
@@ -65,16 +87,51 @@ public class KettleTestScriptOutPutService {
             dataStr.substring(0, dataStr.lastIndexOf(',')) +
             "\nFROM " + middleTableName + " t" + 
             "\n)";
-        
-        //值列表校验
+        return str1 + dataStr2;
+    }
+
+    /**
+     * 值列表校验
+     * @param databaseName
+     * @param middleTableName
+     * @param targetTableName
+     * @param valueMap
+     * @return
+     */
+    private String valueListCheck(String databaseName, String middleTableName,String targetTableName, Map<String, String> valueMap){
         String dataStr3 = "-- 值列表校验\n";
         for (Entry<String, String> entry : valueMap.entrySet()) {
             dataStr3 += String.format(templateStr3, entry.getValue(), entry.getValue(), databaseName, targetTableName, entry.getKey(), entry.getValue(), middleTableName, entry.getKey());
         }
-
-        return str1 + dataStr2 + dataStr3;
+        return dataStr3;
     }
 
+     /**
+     * 值列表校验
+     * @param databaseName
+     * @param middleTableName
+     * @param targetTableName
+     * @param valueMap
+     * @return
+     */
+    private String valueListCheckOracle(String databaseName, String middleTableName,String targetTableName, Map<String, String> valueMap){
+        String dataStr4 = "-- 值列表校验\n";
+        for (Entry<String, String> entry : valueMap.entrySet()) {
+            dataStr4 += String.format(templateStr4, entry.getValue(), entry.getValue(), databaseName, targetTableName, entry.getKey(), entry.getValue(), middleTableName, entry.getKey());
+        }
+        return dataStr4;
+    }
+
+    /**
+     * 中间表sql
+     */
+    public String autoMiddleSql(String databaseName, String middleTableName,String targetTableName, Map<String, String> countMap, Map<String, String> valueMap){
+        return countCheck(databaseName, middleTableName, targetTableName,countMap)  + valueListCheckOracle(databaseName, middleTableName, targetTableName,valueMap);
+    }
+
+    /**
+     * 目标表sql
+     */
     public String autoTargetSql(String databaseName, String targetTableName, Map<String, String> countMap, Map<String, String> valueMap){
         Map<String, String> targetCountMap = new TreeMap<>();
         Map<String, String> targetValueMap = new TreeMap<>();
@@ -85,7 +142,10 @@ public class KettleTestScriptOutPutService {
             targetValueMap.put(value, value);
         }
 
-        return autoMiddleSql(databaseName, targetTableName, targetTableName, targetCountMap, targetValueMap).replaceAll("原数据库", "目标数据库");
+        String resultStr = countCheck(databaseName, targetTableName, targetTableName,targetCountMap)  
+        + valueListCheck(databaseName, targetTableName, targetTableName,targetValueMap);
+
+        return resultStr.replaceAll("原数据库", "目标数据库");
     }
 
     /**
@@ -99,13 +159,13 @@ public class KettleTestScriptOutPutService {
      */
     public void outPutCheckScript(String filename, String databaseName, String middleTableName,String targetTableName, 
                                 Map<String, String> countMap, Map<String, String> valueMap){
-        String outputDir = KettleConstant.WINDOW_OUTPUT_TEST_PATH + filename + "/";
+        String outputDir = KettleConstant.WINDOW_OUTPUT_TEST_PATH_ORACLE + filename + "/";
         File file = new File(outputDir);
         if (!file.exists()) {
             file.mkdirs();
         }
         //读取模板文件
-        String text = FileContentUtil.readByClazz(this.getClass(), KettleConstant.SCRIPT_CHECK_PATH);
+        String text = FileContentUtil.readByClazz(this.getClass(), KettleConstant.SCRIPT_CHECK_PATH_ORACLE);
         //修改模板中数据
         text = text.replaceAll("SCRIPT_NAME", filename)
                    .replaceAll("MIDDLE_SQL", autoMiddleSql(databaseName, middleTableName, targetTableName, countMap, valueMap) )
@@ -119,28 +179,7 @@ public class KettleTestScriptOutPutService {
 
     public static void main(String[] args) {
 
-        Map<String, String> countMap = new TreeMap<>();
-        countMap.put("dms_id", "ID");
-        countMap.put("DISTRIBUTER", " DIST_CODE");
-        countMap.put("VENDERCODE", "VENDER_CODE");
-        countMap.put("WMI", "WMI");
-        countMap.put("VDS", "VDS");
-        countMap.put("VISSTART", "VIS_START");
-        countMap.put("VISEND", "VIS_END");
-        countMap.put("modelname", "MODEL_FINANCIAL_CODE");
-        countMap.put("CKDFLAG", "CKD_FLAG");
-        countMap.put("CKDFLAG", "CKD_FLAG");
-        countMap.put("modelname", "VEHICLE_NAME_CODE");
-        countMap.put("FRANCHISECODE", "FRANCHISE_CODE");
-        countMap.put("switchdate", "SWITCH_DATE");
-        countMap.put("partspriceflag", "PARTS_PRICE_FLAG");
-    
-
-        Map<String, String> valueMap = new TreeMap<>();
-        valueMap.put("DELETEFLAG", "DEL_FLAG");
-        valueMap.put("DELETEFLAG", "VEHICLE_STATUS");
-
-        
+       
         
     }
     
