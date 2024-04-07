@@ -5,6 +5,7 @@ import com.example.parseexcel.common.utils.FileContentUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -27,8 +28,8 @@ public class KettleScriptOutPutService {
     public KettleScriptOutPutService(ResourceLoader resourceLoader){
         this.resourceLoader = resourceLoader;
     }
-
-    public void outPutScript(String sortPath, String targetDatabaseName, String middleDatabaseName,
+    
+    public ResponseEntity<byte[]> outPutScript(String sortPath, String targetDatabaseName, String middleDatabaseName,
                              Map<String,String> scriptNameMap) throws IOException {
         //创建脚本文件夹,创建目标库文件夹
         File directory = new File(outputPath + sortPath);
@@ -42,6 +43,8 @@ public class KettleScriptOutPutService {
             String text = FileContentUtil.readResource(resource);
             FileContentUtil.outputFile(text, outputPath, entry.getValue());
         }
+
+        return null;
     }
 
     /**
@@ -53,7 +56,7 @@ public class KettleScriptOutPutService {
     public void outPutScriptNoSpring(String subPath, String scriptName, String targetTableName,
                                      Map<String, String> replaceMap, Map<String,String> scriptNameMap){
         String dirPath = KettleConstant.WINDOW_OUTPUT_PATH
-                + KettleConstant.WINDOW_OUTPUT_PATH_SUB
+                + KettleConstant.WINDOW_OUTPUT_PATH_SUB_ORACLE
                 + scriptName + "/" + targetTableName + "/";
         //创建脚本文件夹,创建目标库文件夹
         File directory = new File(dirPath);
@@ -62,7 +65,7 @@ public class KettleScriptOutPutService {
         }
 
         //文本内动态路径
-        replaceMap.put(KettleConstant.SUB_PATH, KettleConstant.WINDOW_OUTPUT_PATH_SUB);
+        replaceMap.put(KettleConstant.SUB_PATH, KettleConstant.WINDOW_OUTPUT_PATH_SUB_ORACLE);
 
         //输出逻辑
         for (Map.Entry<String, String> entry : scriptNameMap.entrySet()) {
@@ -137,8 +140,31 @@ public class KettleScriptOutPutService {
         outPutScriptNoSpring("", scriptName, targetTableName, replaceMap, scriptNameMap);
     }
 
+
+    /**
+     * oracle 一个作业五个转换（历史表）
+     * @param scriptName
+     * @param targetTableName
+     * @param middleTableName
+     */
+    private void oracleOutPut1(String scriptName, String targetTableName, String middleTableName){
+        Map<String, String> scriptNameMap = new HashMap<>();
+        scriptNameMap.put("ORACLE_" + KettleConstant.SCRIPT_NAME_WORK_HISTORY, scriptName + ".kjb");
+        scriptNameMap.put("ORACLE_" + KettleConstant.SCRIPT_NAME_TRANS01, scriptName + "01.ktr");
+        scriptNameMap.put("ORACLE_" + KettleConstant.SCRIPT_NAME_TRANS02, scriptName + "02.ktr");
+        scriptNameMap.put("ORACLE_" + KettleConstant.SCRIPT_NAME_TRANS03, scriptName + "03.ktr");
+        scriptNameMap.put("ORACLE_" + KettleConstant.SCRIPT_NAME_TRANS04, scriptName + "04.ktr");
+        scriptNameMap.put("ORACLE_" + KettleConstant.SCRIPT_NAME_TRANS05, scriptName + "05.ktr");
+        Map<String, String>  replaceMap = new HashMap<>();
+        replaceMap.put(KettleConstant.SCRIPT_NAME, scriptName);
+        replaceMap.put(KettleConstant.TARGET_TABLE_NAME, targetTableName);
+        replaceMap.put(KettleConstant.MIDDLE_TABLE_NAME, middleTableName);
+        outPutScriptNoSpring("", scriptName, targetTableName, replaceMap, scriptNameMap);
+    }
+
+
     public static void main(String[] args) {
-       
+      
     }
 
 }
