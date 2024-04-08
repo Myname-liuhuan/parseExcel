@@ -11,7 +11,9 @@ import com.example.parseexcel.common.constant.KettleConstant;
 import com.example.parseexcel.common.utils.FileContentUtil;
 import com.example.parseexcel.service.KettleTestScriptOutPutService;
 import com.example.parseexcel.service.data.KettleTestScriptService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class KettleTestScriptServiceImpl implements KettleTestScriptService{
 
     @Override
