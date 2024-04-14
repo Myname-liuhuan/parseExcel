@@ -24,15 +24,17 @@ public class KettleTestScriptController {
 
     @RequestMapping("/downloadScript")
     @ResponseBody
-    public ResponseEntity<byte[]> downloadScript(){
-        String filename = "TWC保修申请";
-        String databaseName = "infra-dms-wty";
-        String middleTableName = "";
-        String targetTableName = "";
-        Map<String, String> countMap = new HashMap<>();
-        countMap.put("dms_id","ID");
-        Map<String, String> valueMap = new HashMap<>();
-        valueMap.put("DELETEFLAG","DEL_FLAG");
+    //public ResponseEntity<byte[]> downloadScript(){
+    public ResponseEntity<byte[]> downloadScript(String filename, String databaseName, String middleTableName,
+                                                 String targetTableName, Map<String, String> countMap, Map<String, String> valueMap){
+//        String filename = "TWC保修申请";
+//        String databaseName = "infra-dms-wty";
+//        String middleTableName = "";
+//        String targetTableName = "";
+//        Map<String, String> countMap = new HashMap<>();
+//        countMap.put("dms_id","ID");
+//        Map<String, String> valueMap = new HashMap<>();
+//        valueMap.put("DELETEFLAG","DEL_FLAG");
         return kettleTestScriptService.downloadScript(filename, databaseName, middleTableName, targetTableName,
                 countMap, valueMap);
     }
