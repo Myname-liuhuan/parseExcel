@@ -1,5 +1,7 @@
 package com.example.parseexcel.service.data.impl;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 
 import org.springframework.http.HttpHeaders;
@@ -30,7 +32,11 @@ public class KettleTestScriptServiceImpl implements KettleTestScriptService{
                    .replaceAll("TB_NAME",targetTableName);
         //封装返回
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentDispositionFormData(filename + ".ktr", filename + ".ktr");
+        try {
+            headers.setContentDispositionFormData("attachment", URLEncoder.encode(filename + ".ktr", "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 
         ResponseEntity<byte[]> result = new ResponseEntity<byte[]>(text.getBytes(), headers,
