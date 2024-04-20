@@ -17,15 +17,27 @@ public class XMLUtils {
     }
 
 
-    public  boolean checkXml(){
+    /**
+     * 判断标签是否成对存在
+     *
+     * @return 0 是成对存在的； 非0 不是成对存在的并且返回当前位置的index
+     */
+    public Integer checkXml(){
         Stack<String> stack = new Stack<>();
         for(int i = 0; i < text.length(); i++){
             char c = text.charAt(i);
             if ('<' == c){
                 String left = getLeft(i, 1);
+                stack.push(left);
+            }else if ('>' == c){
+                String right = getRight(i, 1);
+                String stackTopStr = stack.pop();
+                if (!right.equals(stackTopStr)){
+                    return i;
+                }
             }
         }
-        return false;
+        return 0;
     }
 
     /**
@@ -52,14 +64,15 @@ public class XMLUtils {
     private String getRight(Integer endIndex, Integer len){
         char c = text.charAt(endIndex - len);
         if (Character.isSpaceChar(c)){
-            return text.substring(endIndex - len, endIndex);
+            return text.substring(endIndex - len +  1, endIndex + 1);
         }else {
             return getRight(endIndex, len + 1);
         }
     }
 
     public static void main(String[] args) {
-        XMLUtils xmlUtils = new XMLUtils("<1234 dfaf");
-        System.out.println(xmlUtils.getLeft(0, 1));
+        String testStr = "<1234 dfaf>";
+        XMLUtils xmlUtils = new XMLUtils(testStr);
+        System.out.println(xmlUtils.getRight(testStr.indexOf(">"), 1));
     }
 }
