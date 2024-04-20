@@ -88,6 +88,31 @@ public class FileContentUtil {
         return result;
     }
 
+    /**
+     * 通过文件路径读取文件内容
+     * @param filePath
+     * @return 成功返回字符串，否则返回null
+     */
+    public static String readByPath(String filePath){
+        String result = null;
+        File file = new File(filePath);
+        if (file.isFile()){
+            try(InputStream inputStream = new FileInputStream(file);
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader)){
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while((line = bufferedReader.readLine()) != null){
+                    stringBuilder.append(line);
+                }
+                result = stringBuilder.toString();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
 
     /**
      * 输出文件内容
