@@ -1,7 +1,6 @@
 package com.example.parseexcel.common.utils;
 
 
-import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -24,17 +23,14 @@ public class XMLUtils {
      */
     public Integer checkXml(){
         Stack<String> stack = new Stack<>();
+
+        Integer start = 0;
         for(int i = 0; i < text.length(); i++){
             char c = text.charAt(i);
             if ('<' == c){
-                String left = getLeft(i, 1);
-                stack.push(left);
-            }else if ('>' == c){
-                String right = getRight(i, 1);
-                String stackTopStr = stack.pop();
-                if (!right.equals(stackTopStr)){
-                    return i;
-                }
+                start = i;
+            }  else if ('>' == c){
+               String sub = text.substring(start, i);
             }
         }
         return 0;
@@ -48,7 +44,7 @@ public class XMLUtils {
      */
     private String getLeft(Integer startIndex, Integer len){
         char c = text.charAt(startIndex + len);
-        if (Character.isSpaceChar(c)){
+        if ('\\' == c){
             return text.substring(startIndex, startIndex + len);
         }else {
             return getLeft(startIndex, len + 1);
@@ -71,8 +67,11 @@ public class XMLUtils {
     }
 
     public static void main(String[] args) {
-        String testStr = "<1234 dfaf>";
+        String testStr =
+                FileContentUtil.readByPath("/Users/huanliu/Documents/privatefile/sharedStrings.xml");
         XMLUtils xmlUtils = new XMLUtils(testStr);
-        System.out.println(xmlUtils.getRight(testStr.indexOf(">"), 1));
+        System.out.println(xmlUtils.checkXml());
+
+
     }
 }
