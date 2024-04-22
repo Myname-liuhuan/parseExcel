@@ -31,6 +31,7 @@ public class XMLUtils {
                 start = i;
             }  else if ('>' == c){
                String sub = text.substring(start, i);
+               sub = sub.indexOf('\u0020') > -1 ? sub.substring(0, sub.indexOf('\u0020')):sub;
             }
         }
         return 0;
