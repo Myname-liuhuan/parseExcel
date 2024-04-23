@@ -32,39 +32,24 @@ public class XMLUtils {
             }  else if ('>' == c){
                String sub = text.substring(start, i);
                sub = sub.indexOf('\u0020') > -1 ? sub.substring(0, sub.indexOf('\u0020')):sub;
+               //判断当前标签是开始标签还是结束标签
+
             }
         }
         return 0;
     }
 
     /**
-     * 获取左标签
-     * @param startIndex 开始索引
-     * @param len 字符长度
-     * @return
+     * 判断标签类型
+     * @param tag 标签字符串
+     * @return  0 开始标签    1 结束标签
      */
-    private String getLeft(Integer startIndex, Integer len){
-        char c = text.charAt(startIndex + len);
-        if ('\\' == c){
-            return text.substring(startIndex, startIndex + len);
-        }else {
-            return getLeft(startIndex, len + 1);
+    private Integer checkTag(String tag){
+        String startPatten = "^</.+>$";
+        if (tag.matches(startPatten)){
+            return 1;
         }
-    }
-
-    /**
-     * 获取右标签
-     * @param endIndex
-     * @param len
-     * @return
-     */
-    private String getRight(Integer endIndex, Integer len){
-        char c = text.charAt(endIndex - len);
-        if (Character.isSpaceChar(c)){
-            return text.substring(endIndex - len +  1, endIndex + 1);
-        }else {
-            return getRight(endIndex, len + 1);
-        }
+        return 0;
     }
 
     public static void main(String[] args) {
