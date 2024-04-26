@@ -33,7 +33,9 @@ public class XMLUtils {
                String sub = text.substring(start, i);
                sub = sub.indexOf('\u0020') > -1 ? sub.substring(0, sub.indexOf('\u0020')):sub;
                //判断当前标签是开始标签还是结束标签
-
+               if (checkTag(sub)) {
+                
+               }
             }
         }
         return 0;
@@ -42,21 +44,21 @@ public class XMLUtils {
     /**
      * 判断标签类型
      * @param tag 标签字符串
-     * @return  0 开始标签    1 结束标签
+     * @return  true 开始标签    false 结束标签
      */
-    private Integer checkTag(String tag){
-        String startPatten = "^</.+>$";
-        if (tag.matches(startPatten)){
-            return 1;
+    private boolean checkTag(String tag){
+        String endPatten = "^</.+>$";
+        if (tag.matches(endPatten)){
+            return false;
         }
-        return 0;
+        return true;
     }
 
     public static void main(String[] args) {
         String testStr =
                 FileContentUtil.readByPath("/Users/huanliu/Documents/privatefile/sharedStrings.xml");
         XMLUtils xmlUtils = new XMLUtils(testStr);
-        System.out.println(xmlUtils.checkXml());
+        System.out.println(xmlUtils.checkTag("</rr>"));
 
 
     }
