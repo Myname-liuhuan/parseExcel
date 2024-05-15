@@ -131,6 +131,39 @@ public class FileContentUtil {
         }
     }
 
+    /**
+     * 输出文件夹下的所有文件路径（遍历子文件夹）
+     * @param fileName
+     */
+    public void exportPath2File(String fileName){
+        String sourceFloder  = "D:\\kettle_file\\售后（Oracle）\\售后保修";
+        String exportFile = "D:\\file\\temp\\售后保修filepath.txt";
+        File file = new File(sourceFloder);
 
+        try(FileOutputStream fileOutputStream = new FileOutputStream(exportFile, false);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
+            BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter)){
+            bufferedWriter.write(getAbsolutePath(file));
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public String getAbsolutePath(File file){
+        if (file.isDirectory()) {
+            StringBuffer sb = new StringBuffer();
+            File[] files = file.listFiles();
+            for (File file2 : files) {
+                sb.append(getAbsolutePath(file2) + "\n");
+            }
+            return sb.toString();
+        }else{
+            return file.getAbsolutePath() + "\n";
+        }
+       
+    }
+
+    public static void main(String[] args) {
+        new FileContentUtil().exportPath2File(null);
+    }
 
 }
