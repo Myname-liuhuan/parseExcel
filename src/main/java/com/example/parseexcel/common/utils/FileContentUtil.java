@@ -162,8 +162,50 @@ public class FileContentUtil {
        
     }
 
+
+    /**
+     * 遍历文件夹及其子文件夹替换其中文件内容
+     * @param filePath 文件夹路径
+     * @param sourceStr
+     * @param targetStr
+     */
+    public void replaceContent(File file, String sourceStr, String targetStr){
+        if (file.isFile()) {
+            String result = null;
+            try(InputStream inputStream = new FileInputStream(file);
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);){
+                StringBuilder stringBuilder = new StringBuilder();
+                int i ;
+                //不适用readLine是因为readLine会去重换行符
+                while((i = bufferedReader.read()) != -1){
+                    stringBuilder.append((char)i);
+                }
+                result = stringBuilder.toString().replaceAll(sourceStr, targetStr);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            try(FileOutputStream fileOutputStream = new FileOutputStream(file, false);
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
+                BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter)){
+                bufferedWriter.write(result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            File[] files = file.listFiles();
+            for (File file2 : files) {
+                replaceContent(file2, sourceStr, targetStr);
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        new FileContentUtil().exportPath2File(null);
+        //new FileContentUtil().exportPath2File(null);
+        new FileContentUtil()
+        .replaceContent(new File("D:\\file\\temp\\汇率"),
+         "DELETEFLAG", "DEL_FLAG");
     }
 
 }
