@@ -135,9 +135,7 @@ public class FileContentUtil {
      * 输出文件夹下的所有文件路径（遍历子文件夹）
      * @param fileName
      */
-    public void exportPath2File(String fileName){
-        String sourceFloder  = "D:\\kettle_file\\售后（Oracle）\\售后保修";
-        String exportFile = "D:\\file\\temp\\售后保修filepath.txt";
+    public void exportPath2File(String sourceFloder, String exportFile){
         File file = new File(sourceFloder);
 
         try(FileOutputStream fileOutputStream = new FileOutputStream(exportFile, false);
@@ -148,6 +146,7 @@ public class FileContentUtil {
             e.printStackTrace();
         }
     }
+
     public String getAbsolutePath(File file){
         if (file.isDirectory()) {
             StringBuffer sb = new StringBuffer();
@@ -202,10 +201,12 @@ public class FileContentUtil {
     }
 
     public static void main(String[] args) {
-        //new FileContentUtil().exportPath2File(null);
         new FileContentUtil()
-        .replaceContent(new File("D:\\file\\temp\\汇率"),
-         "DELETEFLAG", "DEL_FLAG");
+        .exportPath2File(  "D:\\kettle_file\\售后（Oracle）\\测试脚本\\售后保修",
+        "D:\\file\\目标表语句相关\\售后保修测试脚本路径.txt");
+        // new FileContentUtil()
+        // .replaceContent(new File("D:\\kettle_file\\售后（Oracle）\\售后保修"),
+        //  "2019-01-01", "2024-01-01");
     }
 
 }
