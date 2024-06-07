@@ -237,13 +237,13 @@ public class FileContentUtil {
         // .exportPath2File(  "D:\\kettle_file\\售后（Oracle）\\测试脚本\\售后保修",
         // "D:\\file\\目标表语句相关\\售后保修测试脚本路径.txt");
 
-        // new FileContentUtil()
-        // .replaceContent(new File("D:\\kettle_file\\售后（Oracle）\\售后保修"),
-        //  "2019-01-01", "2024-01-01");
+        new FileContentUtil()
+        .replaceContent(new File("D:\\kettle_file\\售后（Oracle）\\售后保修"),
+         "2019-01-01", "2024-01-01");
 
-         new FileContentUtil()
-        .searchContent(new File("D:\\kettle_file\\售后（Oracle）\\售后保修"),
-         "vhc_order_tb_short_temp");
+        //  new FileContentUtil()
+        // .searchContent(new File("D:\\kettle_file\\售后（Oracle）\\售后保修"),
+        //  "vhc_order_tb_short_temp");
     }
 
 }
