@@ -1,5 +1,6 @@
 package com.example.parseexcel.service.data;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.parseexcel.dao.dto.TransferDbMappingTableDTO;
 import com.example.parseexcel.dao.model.TransferDbMappingTable;
 import com.example.parseexcel.dao.vo.TransferDbMappingTableVO;
@@ -24,4 +25,11 @@ public interface TransferDbMappingService {
      * @return
      */
     List<TransferDbMappingTableVO> listAll();
+
+
+    /**
+     * 查询所有
+     * @return
+     */
+     Page<TransferDbMappingTable> pageList(Integer pageNum, Integer pageSize);
 }

@@ -1,6 +1,8 @@
 package com.example.parseexcel.service.data.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.parseexcel.dao.TransferDbMappingTableMapping;
 import com.example.parseexcel.dao.dto.TransferDbMappingTableDTO;
 import com.example.parseexcel.dao.model.TransferDbMappingTable;
@@ -52,4 +54,14 @@ public class TransferDbMappingServiceImpl implements TransferDbMappingService {
         
         return  volist;
     }
+
+    @Override
+    public  Page<TransferDbMappingTable> pageList(Integer pageNum, Integer pageSize) {
+        Page<TransferDbMappingTable> page = new Page<>(pageNum, pageSize);
+        LambdaQueryWrapper<TransferDbMappingTable> query = new LambdaQueryWrapper<>();
+        page = transferDbMappingTableMapping.selectPage(page, query);
+        return page;
+    }
+
+    
 }
