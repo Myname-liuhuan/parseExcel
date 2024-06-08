@@ -1,6 +1,10 @@
 package com.example.parseexcel.common.result;
 
 
+/**
+ * 返回值封装类
+ * @param <T>
+ */
 public class CommonResult<T> {
     /**
      * 状态码
