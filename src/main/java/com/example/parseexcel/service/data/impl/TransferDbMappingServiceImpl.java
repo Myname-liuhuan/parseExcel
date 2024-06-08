@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author liuhuan
@@ -61,13 +62,13 @@ public class TransferDbMappingServiceImpl implements TransferDbMappingService {
         Page<TransferDbMappingTable> page = new Page<>(pageNum, pageSize);
         LambdaQueryWrapper<TransferDbMappingTable> query = new LambdaQueryWrapper<>();
         page = transferDbMappingTableMapping.selectPage(page, query);
-        //封装为VO
-        List<TransferDbMappingTableVO> voList = new ArrayList<>();
-        for (TransferDbMappingTable record : page.getRecords()) {
+        //封装为VO,(使用stream)
+        List<TransferDbMappingTableVO> voList = page.getRecords().stream().map(record -> {
             TransferDbMappingTableVO vo = new TransferDbMappingTableVO();
             BeanUtils.copyProperties(record, vo);
-            voList.add(vo);
-        }
+            return vo;
+        }).collect(Collectors.toList());
+
         Page<TransferDbMappingTableVO> voPage = new Page<>();
         BeanUtils.copyProperties(page, voPage);
         voPage.setRecords(voList);
