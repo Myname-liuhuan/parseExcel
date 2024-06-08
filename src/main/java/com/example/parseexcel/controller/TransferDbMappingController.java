@@ -1,6 +1,7 @@
 package com.example.parseexcel.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.parseexcel.common.result.CommonResult;
 import com.example.parseexcel.dao.dto.TransferDbMappingTableDTO;
 import com.example.parseexcel.dao.model.TransferDbMappingTable;
 import com.example.parseexcel.dao.vo.TransferDbMappingTableVO;
@@ -46,7 +47,7 @@ public class TransferDbMappingController {
      */
     @RequestMapping("/pageList")
     @ResponseBody
-    public  Page<TransferDbMappingTable> pageList(Integer pageNum, Integer pageSize){
+    public CommonResult<Page<TransferDbMappingTableVO>> pageList(Integer pageNum, Integer pageSize){
         return transferDbMappingService.pageList(pageNum == null? 1:pageNum, pageSize == null? 10:pageSize);
     }
 }

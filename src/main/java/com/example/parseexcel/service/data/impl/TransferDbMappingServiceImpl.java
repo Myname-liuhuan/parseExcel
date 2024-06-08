@@ -3,6 +3,7 @@ package com.example.parseexcel.service.data.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.parseexcel.common.result.CommonResult;
 import com.example.parseexcel.dao.TransferDbMappingTableMapping;
 import com.example.parseexcel.dao.dto.TransferDbMappingTableDTO;
 import com.example.parseexcel.dao.model.TransferDbMappingTable;
@@ -56,11 +57,21 @@ public class TransferDbMappingServiceImpl implements TransferDbMappingService {
     }
 
     @Override
-    public  Page<TransferDbMappingTable> pageList(Integer pageNum, Integer pageSize) {
+    public CommonResult<Page<TransferDbMappingTableVO>> pageList(Integer pageNum, Integer pageSize) {
         Page<TransferDbMappingTable> page = new Page<>(pageNum, pageSize);
         LambdaQueryWrapper<TransferDbMappingTable> query = new LambdaQueryWrapper<>();
         page = transferDbMappingTableMapping.selectPage(page, query);
-        return page;
+        //封装为VO
+        List<TransferDbMappingTableVO> voList = new ArrayList<>();
+        for (TransferDbMappingTable record : page.getRecords()) {
+            TransferDbMappingTableVO vo = new TransferDbMappingTableVO();
+            BeanUtils.copyProperties(record, vo);
+            voList.add(vo);
+        }
+        Page<TransferDbMappingTableVO> voPage = new Page<>();
+        BeanUtils.copyProperties(page, voPage);
+        voPage.setRecords(voList);
+        return CommonResult.success(voPage);
     }
 
     
