@@ -20,10 +20,6 @@ logging:
     com:
       example:
         mapper: debug
-#生成kettle脚本配置
-kettle:
-  output:
-    path: ~/Documents/ISPR/kettle_file/售后/售后保修/
 
 # MyBatis配置
 mybatis-plus:
@@ -32,5 +28,15 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     # 开启日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#---------自定义配置-----------
+#生成kettle脚本配置
+kettle:
+  output:
+    path: ~/Documents/ISPR/kettle_file/售后/售后保修/
+#文件工具类配置
+file:
+  source-path: /Users/huanliu/Documents/tempfile/video
+  target-path: /Users/huanliu/Documents/tempfile/audio
 
 
