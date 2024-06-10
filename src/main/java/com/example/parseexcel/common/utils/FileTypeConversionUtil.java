@@ -41,38 +41,33 @@ public class FileTypeConversionUtil {
      * @param targetFile
      */
     private static void videoToAudio(File sourceFile, File targetFile) {
-        File file = sourceFile;
-        if (file.isFile()){
+        if (sourceFile.isFile()){
             //file.getName() 获取的是带后缀的全文件名称
-            String filename = file.getName();
+            String fileHeaderName = sourceFile.getName().substring(0, sourceFile.getName().lastIndexOf('.'));
             FFmpegFrameGrabber frameGrabber1 = new FFmpegFrameGrabber(sourceFile);
-            Frame frame = null;
-            FFmpegFrameRecorder recorder = null;
-            String fileName = null;
+
             try {
                 frameGrabber1.start();
-                // 输出位置
-                fileName = file.getAbsolutePath() + UUID.randomUUID() + ".mp3";
-                System.out.println("--文件名-->>" + fileName);
-                recorder = new FFmpegFrameRecorder(fileName, frameGrabber1.getAudioChannels());
+                // 音频输出位置,当前默认使用视频的名称，（有一定重名概率，后续可优化）
+                String targetPath = targetFile + fileHeaderName + ".mp3";
+
+                FFmpegFrameRecorder recorder;
+                recorder = new FFmpegFrameRecorder(targetPath, frameGrabber1.getAudioChannels());
                 recorder.setFormat("mp3");
                 recorder.setSampleRate(frameGrabber1.getSampleRate());
                 recorder.setTimestamp(frameGrabber1.getTimestamp());
                 recorder.setAudioQuality(0);
 
                 recorder.start();
-                int index = 0;
+                Frame frame;
                 while (true) {
                     frame = frameGrabber1.grab();
                     if (frame == null) {
-                        System.out.println("视频处理完成");
                         break;
                     }
                     if (frame.samples != null) {
                         recorder.recordSamples(frame.sampleRate, frame.audioChannels, frame.samples);
                     }
-                    System.out.println("帧值=" + index);
-                    index++;
                 }
                 recorder.stop();
                 recorder.release();
