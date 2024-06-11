@@ -6,10 +6,10 @@ import org.bytedeco.javacv.Frame;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
-import java.util.UUID;
 
 /**
  * 文件类型转换工具类
+ * 提取视频中的音频需要运行环境安装ffmpeg软件
  * @author liuhuan
  * @date 2024/6/10
  */
@@ -44,15 +44,17 @@ public class FileTypeConversionUtil {
         if (sourceFile.isFile()){
             //file.getName() 获取的是带后缀的全文件名称
             String fileHeaderName = sourceFile.getName().substring(0, sourceFile.getName().lastIndexOf('.'));
-            FFmpegFrameGrabber frameGrabber1 = new FFmpegFrameGrabber(sourceFile);
+            
 
+            FFmpegFrameGrabber frameGrabber1 = null;
+            FFmpegFrameRecorder recorder = null;
             try {
-                frameGrabber1.start();
                 // 音频输出位置,当前默认使用视频的名称，（有一定重名概率，后续可优化）
                 String targetPath = targetFile + fileHeaderName + ".mp3";
-
-                FFmpegFrameRecorder recorder;
+                frameGrabber1 = new FFmpegFrameGrabber(sourceFile);
                 recorder = new FFmpegFrameRecorder(targetPath, frameGrabber1.getAudioChannels());
+                frameGrabber1.start();
+
                 recorder.setFormat("mp3");
                 recorder.setSampleRate(frameGrabber1.getSampleRate());
                 recorder.setTimestamp(frameGrabber1.getTimestamp());
@@ -74,6 +76,21 @@ public class FileTypeConversionUtil {
                 frameGrabber1.stop();
             } catch (Exception e) {
                 e.printStackTrace();
+            }finally{
+                if (recorder != null) {
+                    try {
+                        recorder.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                if(frameGrabber1 != null){
+                    try {
+                        frameGrabber1.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }else{
             File[] files = sourceFile.listFiles();
@@ -86,7 +103,7 @@ public class FileTypeConversionUtil {
 
     public static void main(String[] args) {
         //macos中不能使用~代替路径中的家目录
-        videoToAudio(new File("/Users/huanliu/Documents/tempfile/video"),
-                new File("~/Documents/tempfile/audio"));
+        videoToAudio(new File("D:\\tmp\\video"),
+                new File("D:\\tmp\\audio\\"));
     }
 }
