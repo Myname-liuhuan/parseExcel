@@ -232,18 +232,57 @@ public class FileContentUtil {
        
     }
 
+    
+    /**
+     * 搜索文件内容(忽略大小写) 并打印文件绝对路径
+     * @param file
+     * @param searchStr
+     */
+    public void searchContentIgnoreCase(File file, String searchStr){
+        if (file.isFile()) {
+            try(InputStream inputStream = new FileInputStream(file);
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);){
+                StringBuilder stringBuilder = new StringBuilder();
+                int i ;
+                //不适用readLine是因为readLine会去重换行符
+                while((i = bufferedReader.read()) != -1){
+                    stringBuilder.append((char)i);
+                }
+                if(stringBuilder.toString().toLowerCase().contains(searchStr.toLowerCase())){
+                    System.out.println(file.getAbsolutePath());
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else{
+            File[] files = file.listFiles();
+            for (File file2 : files) {
+                searchContentIgnoreCase(file2, searchStr);
+            }
+        }
+
+       
+    }
+
     public static void main(String[] args) {
         // new FileContentUtil()
         // .exportPath2File(  "D:\\kettle_file\\售后（Oracle）\\测试脚本\\售后保修",
         // "D:\\file\\目标表语句相关\\售后保修测试脚本路径.txt");
 
-        new FileContentUtil()
-        .replaceContent(new File("D:\\kettle_file\\售后（Oracle）\\售后保修"),
-         "2019-01-01", "2024-01-01");
+        // new FileContentUtil()
+        // .replaceContent(new File("D:\\kettle_file\\售后（Oracle）\\售后保修"),
+        //  "2019-01-01", "2023-01-01");
 
+        //查找文件内容
         //  new FileContentUtil()
-        // .searchContent(new File("D:\\kettle_file\\售后（Oracle）\\售后保修"),
-        //  "vhc_order_tb_short_temp");
+        // .searchContent(new File("D:\\kettle_file\\售后（Oracle）"),
+        //  "plan_table");
+
+        //查找文件内容忽略大小写
+         new FileContentUtil()
+        .searchContentIgnoreCase(new File("D:\\kettle_file\\售后（Oracle）"),
+         "bin_");
     }
 
 }
