@@ -31,6 +31,10 @@ public class ImageUtil {
         }else{
             File[] files = sourceImage.listFiles();
             for (File file : files) {
+                //避免目标目录是源目录的子目录导致死循环的情况
+                if (file.getAbsolutePath().equals(FIRST_TARGET_DIRECTORY)) {
+                    continue;
+                }
                 generateThumbnails(file);
             }
         }
@@ -55,6 +59,10 @@ public class ImageUtil {
         FIRST_SOURCE_DIRECTORY = sourceImage.getAbsolutePath();
         FIRST_TARGET_DIRECTORY = targetImage.getAbsolutePath();
         generateThumbnails(sourceImage);
+    }
+
+    public static void main(String[] args) {
+        generateThumbnails("D:\\test\\source", "D:\\test\\target");
     }
 
 }
