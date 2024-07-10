@@ -11,7 +11,7 @@ import lombok.Data;
 public class MusicInfo {
 
     // id主键
-    @TableId(type = IdType.NONE) //插入时雪花算法生成id
+    @TableId(type = IdType.ASSIGN_ID) //插入时雪花算法生成id
     private int id;
 
     // 音乐文件url地址
