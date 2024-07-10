@@ -12,7 +12,7 @@ public class MusicInfo {
 
     // id主键
     @TableId(type = IdType.ASSIGN_ID) //插入时雪花算法生成id
-    private int id;
+    private Long id;
 
     // 音乐文件url地址
     private String musicUrl;
@@ -33,7 +33,7 @@ public class MusicInfo {
     public MusicInfo() {}
 
     // 全参构造方法
-    public MusicInfo(int id, String musicUrl, String imageUrl, String miniImageUrl, String musicName, int musicTimeLength) {
+    public MusicInfo(Long id, String musicUrl, String imageUrl, String miniImageUrl, String musicName, int musicTimeLength) {
         this.id = id;
         this.musicUrl = musicUrl;
         this.imageUrl = imageUrl;
