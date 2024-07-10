@@ -42,9 +42,19 @@ public class ImageUtil {
      * @param targetDirectory
      */
     public static void generateThumbnails(String sourceDirectoy, String targetDirectory){
-        FIRST_SOURCE_DIRECTORY = new File(sourceDirectoy).getAbsolutePath();
-        FIRST_TARGET_DIRECTORY = new File(targetDirectory).getAbsolutePath();
-        generateThumbnails(new File(FIRST_SOURCE_DIRECTORY));
+        File sourceImage = new File(sourceDirectoy);
+        File targetImage = new File(targetDirectory);
+        if (!sourceImage.isDirectory()) {
+            System.out.println(sourceDirectoy + " is not a directory");
+            return;
+        }
+        if (!targetImage.isDirectory()) {
+            System.out.println(targetDirectory + " is not a directory");
+            return;
+        }
+        FIRST_SOURCE_DIRECTORY = sourceImage.getAbsolutePath();
+        FIRST_TARGET_DIRECTORY = targetImage.getAbsolutePath();
+        generateThumbnails(sourceImage);
     }
 
 }
