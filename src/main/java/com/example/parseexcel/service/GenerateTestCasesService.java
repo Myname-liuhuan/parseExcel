@@ -22,8 +22,8 @@ import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson2.JSON;
 import com.example.parseexcel.common.constant.ExcelConstant;
 import com.example.parseexcel.common.utils.StringUtils;
-import com.example.parseexcel.dao.model.CSYLColData;
-import com.example.parseexcel.dao.model.CSYLData;
+import com.example.parseexcel.module.parseexcel.dao.model.CSYLColData;
+import com.example.parseexcel.module.parseexcel.dao.model.CSYLData;
 
 /**
  * 测试用例生成逻辑

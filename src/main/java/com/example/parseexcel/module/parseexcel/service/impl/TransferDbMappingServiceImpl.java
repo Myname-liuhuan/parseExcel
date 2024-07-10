@@ -1,14 +1,14 @@
-package com.example.parseexcel.service.data.impl;
+package com.example.parseexcel.module.parseexcel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.parseexcel.common.result.CommonResult;
-import com.example.parseexcel.dao.TransferDbMappingTableMapping;
-import com.example.parseexcel.dao.dto.TransferDbMappingTableDTO;
-import com.example.parseexcel.dao.model.TransferDbMappingTable;
-import com.example.parseexcel.dao.vo.TransferDbMappingTableVO;
-import com.example.parseexcel.service.data.TransferDbMappingService;
+import com.example.parseexcel.module.parseexcel.dao.TransferDbMappingTableMapping;
+import com.example.parseexcel.module.parseexcel.dao.dto.TransferDbMappingTableDTO;
+import com.example.parseexcel.module.parseexcel.dao.model.TransferDbMappingTable;
+import com.example.parseexcel.module.parseexcel.dao.vo.TransferDbMappingTableVO;
+import com.example.parseexcel.module.parseexcel.service.TransferDbMappingService;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.BeanUtils;

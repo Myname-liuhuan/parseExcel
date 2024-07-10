@@ -1,4 +1,4 @@
-package com.example.parseexcel.dao.vo;
+package com.example.parseexcel.module.parseexcel.dao.vo;
 
 import lombok.Data;
 

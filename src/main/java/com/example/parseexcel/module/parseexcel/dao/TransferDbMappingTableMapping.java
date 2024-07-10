@@ -1,7 +1,8 @@
-package com.example.parseexcel.dao;
+package com.example.parseexcel.module.parseexcel.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.parseexcel.dao.model.TransferDbMappingTable;
+import com.example.parseexcel.module.parseexcel.dao.model.TransferDbMappingTable;
+
 import org.apache.ibatis.annotations.Mapper;
 
 /**

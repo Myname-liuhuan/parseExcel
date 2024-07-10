@@ -1,14 +1,17 @@
-package com.example.parseexcel.dao.dto;
+package com.example.parseexcel.module.parseexcel.dao.model;
+
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
 
 /**
- * 迁移数据映射关系表DTO
+ * 迁移数据映射关系表
  * @author liuhuan
  * @date 2024/4/5
  */
 @Data
-public class TransferDbMappingTableDTO {
+@TableName("transfer_db_mapping")
+public class TransferDbMappingTable {
 
     /**
      * 中间表名称

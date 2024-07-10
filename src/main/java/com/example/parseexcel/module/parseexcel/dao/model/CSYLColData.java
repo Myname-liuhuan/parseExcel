@@ -1,4 +1,4 @@
-package com.example.parseexcel.dao.model;
+package com.example.parseexcel.module.parseexcel.dao.model;
 
 import lombok.Data;
 

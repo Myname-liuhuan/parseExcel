@@ -1,4 +1,4 @@
-package com.example.parseexcel.controller;
+package com.example.parseexcel.module.parseexcel.controller;
 
 import com.example.parseexcel.service.KettleScriptOutPutService;
 import org.springframework.beans.factory.annotation.Autowired;
