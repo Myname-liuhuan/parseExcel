@@ -62,7 +62,7 @@ public class ImageUtil {
     }
 
     public static void main(String[] args) {
-        generateThumbnails("D:\\test\\source", "D:\\test\\target");
+        generateThumbnails("D:\\tmp\\image", "D:\\tmp\\image\\Thumbnails");
     }
 
 }
