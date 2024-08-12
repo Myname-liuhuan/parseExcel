@@ -106,12 +106,7 @@
             <version>2.0.46</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.bytedeco/javacv-platform -->
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>javacv-platform</artifactId>
-            <version>1.5.9</version>
-        </dependency>
+
 
 
         <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
