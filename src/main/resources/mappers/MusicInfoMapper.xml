@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.parseexcel.module.music.dao.MusicInfoMapper">
+   
+    <select id="pageListJoinSong" resultType="com.example.parseexcel.module.music.dao.vo.MusicInfoVO2">
+        SELECT
+            t.*,IFNULL(s.name,"未知歌手") AS singer_name
+        FROM d_music t
+        LEFT JOIN d_singer s ON t.singer_id = s.id 
+        LIMIT #{offset}, #{pageSize};
+    </select>
+</mapper>

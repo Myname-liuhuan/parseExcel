@@ -9,10 +9,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.parseexcel.common.result.CommonResult;
 import com.example.parseexcel.module.music.dao.model.MusicInfo;
 import com.example.parseexcel.module.music.dao.vo.MusicInfoVO;
+import com.example.parseexcel.module.music.dao.vo.MusicInfoVO2;
 import com.example.parseexcel.module.music.service.MusicInfoService;
 
 @RestController
-@RequestMapping("/music")
+@RequestMapping("/media/music")
 public class MusicInfoController {
     @Autowired
     MusicInfoService musicInfoService;
@@ -33,4 +34,14 @@ public class MusicInfoController {
         return musicInfoService.pageList(pageNum == null? 1 :pageNum, pageSize == null? 10 : pageSize);
     }
     
+    /**
+     * 分页查询且关联歌手表
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/pageListJoinSong")
+    public CommonResult<Page<MusicInfoVO2>> pageListJoinSong(Integer pageNum, Integer pageSize){
+        return musicInfoService.pageListJoinSong(pageNum == null || pageNum == 0? 1 :pageNum, pageSize == null? 10 : pageSize);
+    }
 }

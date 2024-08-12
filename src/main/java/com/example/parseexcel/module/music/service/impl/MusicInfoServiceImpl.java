@@ -3,6 +3,8 @@ package com.example.parseexcel.module.music.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.management.ObjectName;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.example.parseexcel.common.result.CommonResult;
 import com.example.parseexcel.module.music.dao.MusicInfoMapper;
 import com.example.parseexcel.module.music.dao.model.MusicInfo;
 import com.example.parseexcel.module.music.dao.vo.MusicInfoVO;
+import com.example.parseexcel.module.music.dao.vo.MusicInfoVO2;
 import com.example.parseexcel.module.music.service.MusicInfoService;
 
 @Service
@@ -51,5 +54,26 @@ public class MusicInfoServiceImpl implements MusicInfoService {
         voPage.setRecords(voList);
         return CommonResult.success(voPage);
     }
+
+    /**
+     * 分页查询音乐信息,且关联歌手表获取歌手姓名
+     */
+    @Override   
+    public CommonResult<Page<MusicInfoVO2>> pageListJoinSong(Integer pageNum, Integer pageSize) {
+        List<MusicInfoVO2> records =  musicInfoMapper.pageListJoinSong((pageNum -1) * pageSize, pageSize);
+        int total = musicInfoMapper.getTotal();
+
+        //封装page
+        Page<MusicInfoVO2> voPage = new Page<>();
+        voPage.setRecords(records);
+        voPage.setTotal(total);
+        voPage.setCurrent(pageNum);
+        voPage.setSize(pageSize);
+        //page类里面会自动运算不需要再赋值
+        // voPage.setPages(total % pageSize == 0 ? total / pageSize : total / pageSize + 1);
+        
+        return CommonResult.success(voPage);
+    }
+    
     
 }
