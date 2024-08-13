@@ -1,12 +1,20 @@
 package com.example.parseexcel.module.music.dao.model;
 
+
+import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("d_music")
 public class MusicInfo {
 
@@ -32,17 +40,13 @@ public class MusicInfo {
     // 音乐时长 单位s
     private int musicTimeLength;
 
-    // 无参构造方法
-    public MusicInfo() {}
+    private Long createUser;
 
-    // 全参构造方法
-    public MusicInfo(Long id,Long singerId, String musicUrl, String imageUrl, String miniImageUrl, String musicName, int musicTimeLength) {
-        this.id = id;
-        this.singerId = singerId;
-        this.musicUrl = musicUrl;
-        this.imageUrl = imageUrl;
-        this.miniImageUrl = miniImageUrl;
-        this.musicName = musicName;
-        this.musicTimeLength = musicTimeLength;
-    }
+    private Long updateUser;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    private Integer delFlag;
 }
