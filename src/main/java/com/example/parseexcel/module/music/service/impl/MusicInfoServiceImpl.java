@@ -3,8 +3,6 @@ package com.example.parseexcel.module.music.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.management.ObjectName;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +27,7 @@ public class MusicInfoServiceImpl implements MusicInfoService {
      */
     @Override
     public int saveMusicInfo(MusicInfo musicInfo) {
-       return musicInfoMapper.insert(musicInfo);
+        return musicInfoMapper.insert(musicInfo);
     }
 
     /**
