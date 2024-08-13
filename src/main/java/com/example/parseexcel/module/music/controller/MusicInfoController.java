@@ -42,6 +42,6 @@ public class MusicInfoController {
      */
     @GetMapping("/pageListJoinSong")
     public CommonResult<Page<MusicInfoVO2>> pageListJoinSong(Integer pageNum, Integer pageSize){
-        return musicInfoService.pageListJoinSong(pageNum == null || pageNum == 0? 1 :pageNum, pageSize == null? 10 : pageSize);
+        return musicInfoService.pageListJoinSong(pageNum == null || pageNum <= 0? 1 :pageNum, pageSize == null? 10 : pageSize);
     }
 }
