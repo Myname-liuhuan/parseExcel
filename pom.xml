@@ -17,8 +17,7 @@
         <java.version>8</java.version>
         <mysql.conn.version>8.0.28</mysql.conn.version>
         <druid.version>1.2.22</druid.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <mybatis.plus.version>3.4.2</mybatis.plus.version>
+        <mybatis.plus.version>3.5.3.1</mybatis.plus.version>
         <beanutils.version>1.9.4</beanutils.version>
     </properties>
     <dependencies>
@@ -39,12 +38,6 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
-            <version>${mybatis-plus.version}</version>
         </dependency>
         <!-- MyBatis plus -->
         <dependency>
