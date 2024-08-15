@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.1.RELEASE</version>
+        <version>3.3.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
@@ -17,7 +17,7 @@
         <java.version>8</java.version>
         <mysql.conn.version>8.0.28</mysql.conn.version>
         <druid.version>1.2.22</druid.version>
-        <mybatis.plus.version>3.5.3.1</mybatis.plus.version>
+        <mybatis.plus.version>3.5.7</mybatis.plus.version>
         <beanutils.version>1.9.4</beanutils.version>
     </properties>
     <dependencies>
@@ -45,6 +45,14 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis.plus.version}</version>
         </dependency>
+
+        <!-- 因为mybatis-plus里面的mybatis-spring版本过低，与springboot3.3.2不兼容，所以需要手动指定mybatis版本-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
         <dependency>
             <groupId>commons-beanutils</groupId>
@@ -99,16 +107,12 @@
             <version>2.0.46</version>
         </dependency>
 
-
-
-
         <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
             <version>0.4.20</version>
         </dependency>
-
 
     </dependencies>
 
