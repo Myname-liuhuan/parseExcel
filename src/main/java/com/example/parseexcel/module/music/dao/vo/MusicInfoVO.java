@@ -27,17 +27,17 @@ public class MusicInfoVO{
     // 音乐时长 单位s
     private int musicTimeLength;
 
-    public String createUser;
+    private Long createUser;
 
-    public String updateUser;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    public Date createTime;
+    private Long updateUser;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    public Date updateTime;
+    private Date createTime;
 
-    public Integer delFlag;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
+
+    private Integer delFlag;
 
 
 }

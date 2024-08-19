@@ -33,17 +33,17 @@ public class MusicInfoVO2 {
     // 演唱者
     private String singerName;
 
-    public String createUser;
+    private Long createUser;
 
-    public String updateUser;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    public Date createTime;
+    private Long updateUser;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    public Date updateTime;
+    private Date createTime;
 
-    public Integer delFlag;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
+
+    private Integer delFlag;
 
 
 
