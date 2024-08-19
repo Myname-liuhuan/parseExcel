@@ -1,9 +1,13 @@
 package com.example.parseexcel.module.music.dao.vo;
 
+import org.apache.poi.hpsf.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
-public class MusicInfoVO {
+public class MusicInfoVO{
 
     // id主键
     private Long id;
@@ -22,6 +26,18 @@ public class MusicInfoVO {
 
     // 音乐时长 单位s
     private int musicTimeLength;
+
+    public String createUser;
+
+    public String updateUser;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public Date createTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public Date updateTime;
+
+    public Integer delFlag;
 
 
 }

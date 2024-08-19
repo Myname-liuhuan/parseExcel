@@ -41,7 +41,7 @@ public class MusicInfoServiceImpl implements MusicInfoService {
         page = musicInfoMapper.selectPage(page, queryWrapper);
 
         //封装为VO
-         List<MusicInfoVO> voList = page.getRecords().stream().map(record -> {
+        List<MusicInfoVO> voList = page.getRecords().stream().map(record -> {
             MusicInfoVO vo = new MusicInfoVO();
             BeanUtils.copyProperties(record, vo);
             return vo;

@@ -1,5 +1,9 @@
 package com.example.parseexcel.module.music.dao.vo;
 
+import org.apache.poi.hpsf.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 /**
@@ -28,6 +32,19 @@ public class MusicInfoVO2 {
 
     // 演唱者
     private String singerName;
+
+    public String createUser;
+
+    public String updateUser;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public Date createTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public Date updateTime;
+
+    public Integer delFlag;
+
 
 
 }
