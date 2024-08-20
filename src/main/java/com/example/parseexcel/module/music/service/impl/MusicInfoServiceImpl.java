@@ -27,7 +27,11 @@ public class MusicInfoServiceImpl implements MusicInfoService {
      */
     @Override
     public int saveMusicInfo(MusicInfo musicInfo) {
-        return musicInfoMapper.insert(musicInfo);
+        if (musicInfo.getId() == null) {
+            return musicInfoMapper.insert(musicInfo);
+        }else {
+            return musicInfoMapper.updateById(musicInfo);
+        }
     }
 
     /**

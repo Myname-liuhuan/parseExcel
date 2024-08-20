@@ -12,7 +12,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+/**
+ * 实体类的变量类型不要使用基本数据类型，而是使用封装类。
+ * mybatis进行update的时候会给基本数据类型默认值，但其实这个字段并不需要更新,导致更新结果与预期不一致
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -39,7 +42,7 @@ public class MusicInfo {
     private String musicName;
 
     // 音乐时长 单位s
-    private int musicTimeLength;
+    private Integer musicTimeLength;
 
     private Long createUser;
 
