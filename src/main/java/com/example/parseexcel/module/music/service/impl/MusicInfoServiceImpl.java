@@ -43,12 +43,8 @@ public class MusicInfoServiceImpl implements MusicInfoService {
         Page<MusicInfo> page = new Page<>(pageNum, pageSize);
         LambdaQueryWrapper<MusicInfo> queryWrapper = new LambdaQueryWrapper<>();
         //如果有条件可以在这里queryWrapper中方法添加
-        queryWrapper.eq(MusicInfo::getDelFlag, SystemConstant.DEL_FLAG_NO)
-                    .and(wrapper -> 
-                        wrapper.eq(MusicInfo::getSingerId, musicInfo.getSingerId())
-                            .or()
-                            .like(MusicInfo::getMusicName, musicInfo.getMusicName())
-        );
+        queryWrapper.eq(MusicInfo::getDelFlag, SystemConstant.DEL_FLAG_NO);
+                    
         page = musicInfoMapper.selectPage(page, queryWrapper);
 
         //封装为VO
