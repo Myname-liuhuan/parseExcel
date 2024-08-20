@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.parseexcel.common.constant.SystemConstant;
 import com.example.parseexcel.common.result.CommonResult;
 import com.example.parseexcel.module.music.dao.MusicInfoMapper;
 import com.example.parseexcel.module.music.dao.model.MusicInfo;
@@ -38,10 +39,16 @@ public class MusicInfoServiceImpl implements MusicInfoService {
      * 分页查询音乐信息
      */
     @Override
-    public CommonResult<Page<MusicInfoVO>> pageList(Integer pageNum, Integer pageSize) {
+    public CommonResult<Page<MusicInfoVO>> pageList(MusicInfo musicInfo, Integer pageNum, Integer pageSize) {
         Page<MusicInfo> page = new Page<>(pageNum, pageSize);
         LambdaQueryWrapper<MusicInfo> queryWrapper = new LambdaQueryWrapper<>();
         //如果有条件可以在这里queryWrapper中方法添加
+        queryWrapper.eq(MusicInfo::getDelFlag, SystemConstant.DEL_FLAG_NO)
+                    .and(wrapper -> 
+                        wrapper.eq(MusicInfo::getSingerId, musicInfo.getSingerId())
+                            .or()
+                            .like(MusicInfo::getMusicName, musicInfo.getMusicName())
+        );
         page = musicInfoMapper.selectPage(page, queryWrapper);
 
         //封装为VO

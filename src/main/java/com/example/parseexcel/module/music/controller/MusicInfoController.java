@@ -31,8 +31,8 @@ public class MusicInfoController {
      * @return
      */
     @GetMapping("/pageList")
-    public CommonResult<Page<MusicInfoVO>> pageList(Integer pageNum, Integer pageSize){
-        return musicInfoService.pageList(pageNum == null? 1 :pageNum, pageSize == null? 10 : pageSize);
+    public CommonResult<Page<MusicInfoVO>> pageList(MusicInfo musicInfo,Integer pageNum, Integer pageSize){
+        return musicInfoService.pageList(musicInfo,pageNum == null? 1 :pageNum, pageSize == null? 10 : pageSize);
     }
     
     /**
