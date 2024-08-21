@@ -12,6 +12,6 @@ public interface MusicInfoService {
 
     CommonResult<Page<MusicInfoVO>> pageList(MusicInfo musicInfo, Integer pageNum, Integer pageSize);
 
-    CommonResult<Page<MusicInfoVO2>> pageListJoinSong(Integer pageNum, Integer pageSize);
+    CommonResult<Page<MusicInfoVO2>> pageListJoinSong(MusicInfo musicInfo, Integer pageNum, Integer pageSize);
 
 }

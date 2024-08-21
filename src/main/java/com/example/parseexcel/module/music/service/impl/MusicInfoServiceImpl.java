@@ -64,8 +64,8 @@ public class MusicInfoServiceImpl implements MusicInfoService {
      * 分页查询音乐信息,且关联歌手表获取歌手姓名
      */
     @Override   
-    public CommonResult<Page<MusicInfoVO2>> pageListJoinSong(Integer pageNum, Integer pageSize) {
-        List<MusicInfoVO2> records =  musicInfoMapper.pageListJoinSong((pageNum -1) * pageSize, pageSize);
+    public CommonResult<Page<MusicInfoVO2>> pageListJoinSong(MusicInfo musicInfo,Integer pageNum, Integer pageSize) {
+        List<MusicInfoVO2> records =  musicInfoMapper.pageListJoinSong(musicInfo, (pageNum -1) * pageSize, pageSize);
         int total = musicInfoMapper.getTotal();
 
         //封装page
