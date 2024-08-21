@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -63,6 +64,7 @@ public class MusicInfoServiceImpl implements MusicInfoService {
     /**
      * 分页查询音乐信息,且关联歌手表获取歌手姓名
      */
+    @Transactional
     @Override   
     public CommonResult<Page<MusicInfoVO2>> pageListJoinSong(MusicInfo musicInfo,Integer pageNum, Integer pageSize) {
         List<MusicInfoVO2> records =  musicInfoMapper.pageListJoinSong(musicInfo, (pageNum -1) * pageSize, pageSize);

@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Select;
 public interface MusicInfoMapper extends BaseMapper<MusicInfo> {
     List<MusicInfoVO2> pageListJoinSong(@Param("musicInfo") MusicInfo musicInfo, Integer offset, Integer pageSize);
 
-    @Select("SELECT count(*) AS total FROM d_music")
+    @Select("SELECT FOUND_ROWS()")
     Integer getTotal();
     
 }
