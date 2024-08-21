@@ -94,7 +94,7 @@
 
     <select id="pageListJoinSong" resultType="com.example.parseexcel.module.music.dao.vo.MusicInfoVO2">
         SELECT
-            t.*,IFNULL(s.name,"未知歌手") AS singer_name
+            SQL_CALC_FOUND_ROWS t.*,IFNULL(s.name,"未知歌手") AS singer_name
         FROM d_music t
         LEFT JOIN d_singer s ON t.singer_id = s.id 
         <include refid='where_param_t'>
