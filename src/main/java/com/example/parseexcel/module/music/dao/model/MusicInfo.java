@@ -29,6 +29,11 @@ public class MusicInfo {
     // 歌手id
     private Long singerId;
 
+    /**
+     * 歌手名称
+     */
+    private String singerName;
+
     // 音乐文件url地址
     private String musicUrl;
 

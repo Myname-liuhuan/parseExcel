@@ -4,88 +4,90 @@
    
   <sql id="where_param">
         <where>
-            <trim suffixOverrides=",">
-                <if test="musicInfo.id != null">
-                    AND id = #{musicInfo.id},
-                </if>
-                <if test="musicInfo.singerId != null">
-                    AND singer_id = #{musicInfo.singerId},
-                </if>
-                <if test="musicInfo.musicUrl != null and musicInfo.musicUrl != ''">
-                    AND music_url = #{musicInfo.musicUrl},
-                </if>
-                <if test="musicInfo.imageUrl != null and musicInfo.imageUrl != ''">
-                    AND image_url = #{musicInfo.imageUrl},
-                </if>
-                <if test="musicInfo.miniImageUrl != null and musicInfo.miniImageUrl != ''">
-                    AND mini_image_url = #{musicInfo.miniImageUrl},
-                </if>
-                <if test="musicInfo.musicName != null and musicInfo.musicName != ''">
-                    AND music_name LIKE CONCAT('%', #{musicInfo.musicName}, '%'),
-                </if>
-                <if test="musicInfo.musicTimeLength != null">
-                    AND music_time_length = #{musicInfo.musicTimeLength},
-                </if>
-                <if test="musicInfo.createTime != null">
-                    AND create_time = #{musicInfo.createTime},
-                </if>
-                <if test="musicInfo.updateTime != null">
-                    AND update_time = #{musicInfo.updateTime},
-                </if>
-                <if test="musicInfo.createUser != null">
-                    AND create_user = #{musicInfo.createUser},
-                </if>
-                <if test="musicInfo.updateUser != null">
-                    AND update_user = #{musicInfo.updateUser},
-                </if>
-                <if test="musicInfo.delFlag != null">
-                    AND del_flag = #{musicInfo.delFlag},
-                </if>
-            </trim>
+            <if test="musicInfo.id != null">
+                AND id = #{musicInfo.id}
+            </if>
+            <if test="musicInfo.singerId != null">
+                AND singer_id = #{musicInfo.singerId}
+            </if>
+            <if test="musicInfo.musicUrl != null and musicInfo.musicUrl != ''">
+                AND music_url = #{musicInfo.musicUrl}
+            </if>
+            <if test="musicInfo.imageUrl != null and musicInfo.imageUrl != ''">
+                AND image_url = #{musicInfo.imageUrl}
+            </if>
+            <if test="musicInfo.miniImageUrl != null and musicInfo.miniImageUrl != ''">
+                AND mini_image_url = #{musicInfo.miniImageUrl}
+            </if>
+            <if test="musicInfo.musicName != null and musicInfo.musicName != ''">
+                AND music_name LIKE CONCAT('%', #{musicInfo.musicName}, '%')
+            </if>
+            <if test="musicInfo.musicTimeLength != null">
+                AND music_time_length = #{musicInfo.musicTimeLength}
+            </if>
+            <if test="musicInfo.createTime != null">
+                AND create_time = #{musicInfo.createTime}
+            </if>
+            <if test="musicInfo.updateTime != null">
+                AND update_time = #{musicInfo.updateTime}
+            </if>
+            <if test="musicInfo.createUser != null">
+                AND create_user = #{musicInfo.createUser}
+            </if>
+            <if test="musicInfo.updateUser != null">
+                AND update_user = #{musicInfo.updateUser}
+            </if>
+            <if test="musicInfo.delFlag != null">
+                AND del_flag = #{musicInfo.delFlag}
+            </if>
+            <if test="musicInfo.singerName != null and musicInfo.singerName != ''">
+                AND s.name LIKE CONCAT('%', #{musicInfo.singerName}, '%' )
+            </if>
         </where>
    </sql>
    
    <sql id="where_param_t">
         <where>
-            <trim suffixOverrides=",">
-                <if test="musicInfo.id != null">
-                    AND ${tableAlias}.id = #{musicInfo.id},
-                </if>
-                <if test="musicInfo.singerId != null">
-                    AND ${tableAlias}.singer_id = #{musicInfo.singerId},
-                </if>
-                <!-- test条件里面的and不能大写，只能小写，否则会报错 -->
-                <if test="musicInfo.musicUrl != null and musicInfo.musicUrl != ''" >
-                    AND ${tableAlias}.music_url = #{musicInfo.musicUrl},
-                </if>
-                <if test="musicInfo.imageUrl != null and musicInfo.imageUrl != ''">
-                    AND ${tableAlias}.image_url = #{musicInfo.imageUrl},
-                </if>
-                <if test="musicInfo.miniImageUrl != null and musicInfo.miniImageUrl != ''">
-                    AND ${tableAlias}.mini_image_url = #{musicInfo.miniImageUrl},
-                </if>
-                <if test="musicInfo.musicName != null and musicInfo.musicName != ''">
-                    AND ${tableAlias}.music_name LIKE CONCAT('%', #{musicInfo.musicName}, '%' ),
-                </if>
-                <if test="musicInfo.musicTimeLength != null">
-                    AND ${tableAlias}.music_time_length = #{musicInfo.musicTimeLength},
-                </if>
-                <if test="musicInfo.createTime != null">
-                    AND ${tableAlias}.create_time = #{musicInfo.createTime},
-                </if>
-                <if test="musicInfo.updateTime != null">
-                    AND ${tableAlias}.update_time = #{musicInfo.updateTime},
-                </if>
-                <if test="musicInfo.createUser != null">
-                    AND ${tableAlias}.create_user = #{musicInfo.createUser},
-                </if>
-                <if test="musicInfo.updateUser != null">
-                    AND ${tableAlias}.update_user = #{musicInfo.updateUser},
-                </if>
-                <if test="musicInfo.delFlag != null">
-                    AND ${tableAlias}.del_flag = #{musicInfo.delFlag},
-                </if>
-            </trim>
+            <if test="musicInfo.id != null">
+                AND ${tableAlias}.id = #{musicInfo.id}
+            </if>
+            <if test="musicInfo.singerId != null">
+                AND ${tableAlias}.singer_id = #{musicInfo.singerId}
+            </if>
+            <!-- test条件里面的and不能大写，只能小写，否则会报错 -->
+            <if test="musicInfo.musicUrl != null and musicInfo.musicUrl != ''" >
+                AND ${tableAlias}.music_url = #{musicInfo.musicUrl}
+            </if>
+            <if test="musicInfo.imageUrl != null and musicInfo.imageUrl != ''">
+                AND ${tableAlias}.image_url = #{musicInfo.imageUrl}
+            </if>
+            <if test="musicInfo.miniImageUrl != null and musicInfo.miniImageUrl != ''">
+                AND ${tableAlias}.mini_image_url = #{musicInfo.miniImageUrl}
+            </if>
+            <if test="musicInfo.musicName != null and musicInfo.musicName != ''">
+                AND ${tableAlias}.music_name LIKE CONCAT('%', #{musicInfo.musicName}, '%' )
+            </if>
+            <if test="musicInfo.musicTimeLength != null">
+                AND ${tableAlias}.music_time_length = #{musicInfo.musicTimeLength}
+            </if>
+            <if test="musicInfo.createTime != null">
+                AND ${tableAlias}.create_time = #{musicInfo.createTime}
+            </if>
+            <if test="musicInfo.updateTime != null">
+                AND ${tableAlias}.update_time = #{musicInfo.updateTime}
+            </if>
+            <if test="musicInfo.createUser != null">
+                AND ${tableAlias}.create_user = #{musicInfo.createUser}
+            </if>
+            <if test="musicInfo.updateUser != null">
+                AND ${tableAlias}.update_user = #{musicInfo.updateUser}
+            </if>
+            <if test="musicInfo.delFlag != null">
+                AND ${tableAlias}.del_flag = #{musicInfo.delFlag}
+            </if>
+            <if test="musicInfo.singerName != null and musicInfo.singerName != ''">
+                AND s.name LIKE CONCAT('%', #{musicInfo.singerName}, '%' )
+            </if>
         </where>
    </sql>
 
