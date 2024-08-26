@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.parseexcel.module.music.dao.MusicSingerMapper">
+   
+  <sql id="where_param">
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="name != null and name != '' ">
+                AND name = #{name}
+            </if>
+            <if test="sex != null  ">
+                AND sex = #{sex}
+            </if>
+             <if test="birthday != null  ">
+                AND birthday = #{birthday}
+            </if>
+            <if test="createTime != null">
+                AND create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                AND update_time = #{updateTime}
+            </if>
+            <if test="createUser != null">
+                AND create_user = #{createUser}
+            </if>
+            <if test="updateUser != null">
+                AND update_user = #{updateUser}
+            </if>
+            <if test="delFlag != null">
+                AND del_flag = #{delFlag}
+            </if>
+        </where>
+   </sql>
+   
+
+    <select id="getList" resultType="com.example.parseexcel.module.music.dao.vo.MusicSingerVO">
+        SELECT
+            *
+        FROM d_singer
+        <include refid='where_param'/>
+    </select>
+</mapper>
