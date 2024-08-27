@@ -20,7 +20,7 @@ public class MusicInfoController {
     MusicInfoService musicInfoService;
 
     @PostMapping("/saveMusicInfo")
-    public int saveMusicInfo(MusicInfo musicInfo){
+    public CommonResult<Integer> saveMusicInfo(MusicInfo musicInfo){
         return musicInfoService.saveMusicInfo(musicInfo);
     }
 
