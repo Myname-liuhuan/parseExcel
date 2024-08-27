@@ -10,7 +10,7 @@ import lombok.Data;
 public class MusicInfoVO{
 
     // id主键
-    private Long id;
+    private String id;
 
     // 音乐文件url地址
     private String musicUrl;

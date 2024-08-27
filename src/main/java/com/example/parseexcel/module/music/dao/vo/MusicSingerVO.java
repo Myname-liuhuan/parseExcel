@@ -14,8 +14,7 @@ import lombok.Data;
 @Data
 public class MusicSingerVO {
 
-    @TableId(type = IdType.ASSIGN_ID) 
-    private Long id;
+    private String id;
 
     //歌手名称
     private String name;
