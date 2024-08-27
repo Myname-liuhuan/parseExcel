@@ -8,7 +8,7 @@ import com.example.parseexcel.module.music.dao.vo.MusicInfoVO2;
 
 
 public interface MusicInfoService {
-    int saveMusicInfo(MusicInfo musicInfo);
+    CommonResult<Integer> saveMusicInfo(MusicInfo musicInfo);
 
     CommonResult<Page<MusicInfoVO>> pageList(MusicInfo musicInfo, Integer pageNum, Integer pageSize);
 

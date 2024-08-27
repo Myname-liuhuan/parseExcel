@@ -28,11 +28,11 @@ public class MusicInfoServiceImpl implements MusicInfoService {
      * 保存音乐信息
      */
     @Override
-    public int saveMusicInfo(MusicInfo musicInfo) {
+    public CommonResult<Integer> saveMusicInfo(MusicInfo musicInfo) {
         if (musicInfo.getId() == null) {
-            return musicInfoMapper.insert(musicInfo);
-        }else {
-            return musicInfoMapper.updateById(musicInfo);
+            return CommonResult.success(musicInfoMapper.insert(musicInfo));
+        } else {
+            return CommonResult.success(musicInfoMapper.updateById(musicInfo));
         }
     }
 
