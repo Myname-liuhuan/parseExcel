@@ -22,7 +22,7 @@ public class MusicInfoController {
 
     /**
      * 保存音乐信息
-     * 只有实体类作为参数接收数据时记得加@RequestBody;如果有多个参数会自动加上，但是单个参数的时候需要手动加
+     * post请求一定记得要设置 @RequestBody
      * @param musicInfo
      * @return
      */
@@ -58,8 +58,8 @@ public class MusicInfoController {
      * @param id
      * @return
      */
-    @PostMapping("/saveMusicInfo")
+    @PostMapping("/logicalDeleteById")
     public CommonResult<Integer> logicalDeleteById(@RequestBody Long id){
-        return musicInfoService.logicalDeleteById(id);
+        return musicInfoService.logicalDeleteById(Long.valueOf(id));
     }
 }
