@@ -52,4 +52,14 @@ public class MusicInfoController {
     public CommonResult<Page<MusicInfoVO2>> pageListJoinSong(MusicInfo musicInfo,Integer pageNum, Integer pageSize){
         return musicInfoService.pageListJoinSong(musicInfo, pageNum == null || pageNum <= 0? 1 :pageNum, pageSize == null? 10 : pageSize);
     }
+
+    /**
+     * 通过id逻辑删除数据
+     * @param id
+     * @return
+     */
+    @PostMapping("/saveMusicInfo")
+    public CommonResult<Integer> logicalDeleteById(@RequestBody Long id){
+        return musicInfoService.logicalDeleteById(id);
+    }
 }

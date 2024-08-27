@@ -3,6 +3,7 @@ package com.example.parseexcel.module.music.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,6 +82,31 @@ public class MusicInfoServiceImpl implements MusicInfoService {
         
         return CommonResult.success(voPage);
     }
+
+    /**
+     * 物理删除音乐信息
+     */
+    @Override
+    public CommonResult<Integer> deleteById(Long id) {
+        int count  = musicInfoMapper.deleteById(id);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed("删除失败");
+    }
+
+    /**
+     * 逻辑删除音乐信息
+     */
+    @Override
+    public CommonResult<Integer> logicalDeleteById(Long id) {
+        MusicInfo musicInfo = new MusicInfo();
+        musicInfo.setId(id);
+        musicInfo.setDelFlag(SystemConstant.DEL_FLAG_YES);
+        return CommonResult.success(musicInfoMapper.updateById(musicInfo));
+    }
     
+
+     
     
 }

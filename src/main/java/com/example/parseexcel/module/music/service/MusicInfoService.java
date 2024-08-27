@@ -14,4 +14,9 @@ public interface MusicInfoService {
 
     CommonResult<Page<MusicInfoVO2>> pageListJoinSong(MusicInfo musicInfo, Integer pageNum, Integer pageSize);
 
+    CommonResult<Integer> deleteById(Long id);
+    CommonResult<Integer> logicalDeleteById(Long id);
+
+
+
 }
