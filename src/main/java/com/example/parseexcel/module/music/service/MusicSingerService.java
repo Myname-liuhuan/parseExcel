@@ -10,4 +10,6 @@ public interface MusicSingerService {
     
     CommonResult<List<MusicSingerVO>> getList(MusicSinger musicSinger);
 
+    CommonResult<Integer> saveMusicSinger(MusicSinger musicSinger);
+
 }

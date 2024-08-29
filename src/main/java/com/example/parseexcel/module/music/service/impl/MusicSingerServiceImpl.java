@@ -21,5 +21,13 @@ public class MusicSingerServiceImpl implements MusicSingerService {
     public CommonResult<List<MusicSingerVO>> getList(MusicSinger musicSinger) {
         return CommonResult.success(musicSingerMapper.getList(musicSinger));
     }
+
+    @Override
+    public CommonResult<Integer> saveMusicSinger(MusicSinger musicSinger) {
+        if (musicSinger.getId() == null) {
+            return CommonResult.success(musicSingerMapper.insert(musicSinger));
+        }
+        return CommonResult.success(musicSingerMapper.updateById(musicSinger));
+    }
     
 }
