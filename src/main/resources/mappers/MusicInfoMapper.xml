@@ -108,10 +108,10 @@
 
     <update id="logicalBatchDeleteByIds" >
         UPDATE d_music
-        SET del_flag = #{delFlag}
+        SET del_flag = #{list[0].delFlag},update_time = #{list[0].updateTime}, update_user = #{list[0].updateUser}
         WHERE id IN
-        <foreach item="id" collection="ids" open="(" separator="," close=")">
-            #{id}
+        <foreach item="musicInfo" collection="list" open="(" separator="," close=")">
+            #{musicInfo.id}
         </foreach>
     </update>
 

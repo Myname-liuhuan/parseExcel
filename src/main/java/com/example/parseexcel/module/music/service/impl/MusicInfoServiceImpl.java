@@ -111,12 +111,17 @@ public class MusicInfoServiceImpl implements MusicInfoService {
      * 批量逻辑删除音乐信息
      */
     @Override
-    public CommonResult<Integer> logicalBatchDeleteByIds(Long[] ids) {
+    public CommonResult<Integer> logicalBatchDeleteByIds(List<MusicInfo> list) {
         //验证ids空
-        if (ids == null || ids.length == 0) {
+        if (list == null || list.size() == 0) {
             return CommonResult.failed("选择行不能为空");
         }
-        int count = musicInfoMapper.logicalBatchDeleteByIds(Arrays.asList(ids), SystemConstant.DEL_FLAG_YES);
+        //将list.delFlag设置为删除状态
+        list.forEach(record -> {
+            record.setDelFlag(SystemConstant.DEL_FLAG_YES);
+        });
+        
+        int count = musicInfoMapper.logicalBatchDeleteByIds(list);
         return CommonResult.success(count);
     }
       

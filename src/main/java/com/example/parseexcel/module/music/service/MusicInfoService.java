@@ -1,5 +1,7 @@
 package com.example.parseexcel.module.music.service;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.parseexcel.common.result.CommonResult;
 import com.example.parseexcel.module.music.dao.model.MusicInfo;
@@ -17,7 +19,7 @@ public interface MusicInfoService {
     CommonResult<Integer> deleteById(Long id);
     CommonResult<Integer> logicalDeleteById(Long id);
 
-    CommonResult<Integer> logicalBatchDeleteByIds(Long[] ids);
+    CommonResult<Integer> logicalBatchDeleteByIds(List<MusicInfo> list);
 
 
 

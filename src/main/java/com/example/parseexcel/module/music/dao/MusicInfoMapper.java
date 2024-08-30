@@ -18,6 +18,6 @@ public interface MusicInfoMapper extends BaseMapper<MusicInfo> {
     @Select("SELECT FOUND_ROWS()")
     Integer getTotal();
 
-    Integer logicalBatchDeleteByIds(List<Long> ids, Integer delFlag);
+    Integer logicalBatchDeleteByIds(List<MusicInfo> list);
     
 }

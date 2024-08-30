@@ -1,6 +1,7 @@
 package com.example.parseexcel.module.music.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,7 +74,7 @@ public class MusicInfoController {
      * @return
      */
     @PostMapping("/logicalBatchDeleteByIds")
-    public CommonResult<Integer> logicalBatchDeleteByIds(@RequestBody Long[] ids){
-        return musicInfoService.logicalBatchDeleteByIds(ids);
+    public CommonResult<Integer> logicalBatchDeleteByIds(@RequestBody List<MusicInfo> list){
+        return musicInfoService.logicalBatchDeleteByIds(list);
     }
 }
