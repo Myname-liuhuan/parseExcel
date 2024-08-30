@@ -17,6 +17,9 @@ public interface MusicInfoService {
     CommonResult<Integer> deleteById(Long id);
     CommonResult<Integer> logicalDeleteById(Long id);
 
+    CommonResult<Integer> logicalBatchDeleteByIds(Long[] ids);
+
+
 
 
 }

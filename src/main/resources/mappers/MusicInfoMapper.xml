@@ -104,4 +104,15 @@
         </include>
         LIMIT #{offset}, #{pageSize};
     </select>
+
+
+    <update id="logicalBatchDeleteByIds" >
+        UPDATE d_music
+        SET del_flag = #{delFlag}
+        WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
 </mapper>

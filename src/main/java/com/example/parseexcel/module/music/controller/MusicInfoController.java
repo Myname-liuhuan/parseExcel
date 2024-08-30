@@ -1,5 +1,7 @@
 package com.example.parseexcel.module.music.controller;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,8 @@ import com.example.parseexcel.module.music.dao.model.MusicInfo;
 import com.example.parseexcel.module.music.dao.vo.MusicInfoVO;
 import com.example.parseexcel.module.music.dao.vo.MusicInfoVO2;
 import com.example.parseexcel.module.music.service.MusicInfoService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/media/music")
@@ -60,6 +64,16 @@ public class MusicInfoController {
      */
     @PostMapping("/logicalDeleteById")
     public CommonResult<Integer> logicalDeleteById(@RequestBody Long id){
-        return musicInfoService.logicalDeleteById(Long.valueOf(id));
+        return musicInfoService.logicalDeleteById(id);
+    }
+
+    /**
+     * 通过id逻辑删除数据
+     * @param id
+     * @return
+     */
+    @PostMapping("/logicalBatchDeleteByIds")
+    public CommonResult<Integer> logicalBatchDeleteByIds(@RequestBody Long[] ids){
+        return musicInfoService.logicalBatchDeleteByIds(ids);
     }
 }

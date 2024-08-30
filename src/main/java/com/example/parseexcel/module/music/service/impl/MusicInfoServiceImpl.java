@@ -1,5 +1,6 @@
 package com.example.parseexcel.module.music.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -105,7 +106,20 @@ public class MusicInfoServiceImpl implements MusicInfoService {
         musicInfo.setDelFlag(SystemConstant.DEL_FLAG_YES);
         return CommonResult.success(musicInfoMapper.updateById(musicInfo));
     }
-    
+
+    /**
+     * 批量逻辑删除音乐信息
+     */
+    @Override
+    public CommonResult<Integer> logicalBatchDeleteByIds(Long[] ids) {
+        //验证ids空
+        if (ids == null || ids.length == 0) {
+            return CommonResult.failed("选择行不能为空");
+        }
+        int count = musicInfoMapper.logicalBatchDeleteByIds(Arrays.asList(ids), SystemConstant.DEL_FLAG_YES);
+        return CommonResult.success(count);
+    }
+      
 
      
     
