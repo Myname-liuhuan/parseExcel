@@ -2,8 +2,6 @@ package com.example.parseexcel.module.music.dao.vo;
 
 import java.util.Date;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
@@ -19,10 +17,8 @@ public class MusicSingerVO {
     //歌手名称
     private String name;
 
-    //性别 1男 0女
-    private Integer sex;
-
     //出生日期
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthday;
 
 /*** 以下为公共字段 ***/

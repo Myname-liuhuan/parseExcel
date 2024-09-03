@@ -13,6 +13,9 @@
             <if test="sex != null  ">
                 AND sex = #{sex}
             </if>
+             <if test="singerType != null  ">
+                AND singer_type = #{singerType}
+            </if>
              <if test="birthday != null  ">
                 AND birthday = #{birthday}
             </if>

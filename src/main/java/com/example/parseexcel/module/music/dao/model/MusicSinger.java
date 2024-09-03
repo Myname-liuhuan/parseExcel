@@ -31,6 +31,9 @@ public class MusicSinger {
     //性别 1男 0女
     private Integer sex;
 
+    //歌手类型 1独立歌手  2乐队
+    private Integer singerType;
+
     //出生日期
     private Date birthday;
 
