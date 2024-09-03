@@ -4,6 +4,7 @@ package com.example.parseexcel.module.music.dao.model;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -29,6 +30,7 @@ public class MusicInfo {
     private Long id;
 
     // 歌手id
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
     private Long singerId;
 
     /**
