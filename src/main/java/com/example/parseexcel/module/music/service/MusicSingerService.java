@@ -15,4 +15,8 @@ public interface MusicSingerService {
 
     CommonResult<Page<MusicSingerVO>> pageList(MusicSinger musicSinger, Integer pageNum, Integer pageSize);
 
+    CommonResult<Integer> logicalDeleteById(Long id);
+
+    CommonResult<Integer> logicalBatchDeleteByIds(List<MusicSinger> list);
+
 }

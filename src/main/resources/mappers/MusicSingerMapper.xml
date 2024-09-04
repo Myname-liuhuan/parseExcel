@@ -84,4 +84,14 @@
         <include refid='where_page_param'/>
         LIMIT #{offset}, #{pageSize}
     </select>
+
+    <update id="logicalBatchDeleteByIds" >
+        UPDATE d_singer
+        SET del_flag = #{list[0].delFlag},update_time = #{list[0].updateTime}, update_user = #{list[0].updateUser}
+        WHERE id IN
+        <foreach item="musicSinger" collection="list" open="(" separator="," close=")">
+            #{musicInfo.id}
+        </foreach>
+    </update>
+
 </mapper>

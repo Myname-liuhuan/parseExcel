@@ -40,5 +40,14 @@ public class MusicSingerController {
     public CommonResult<Page<MusicSingerVO>> pageList(MusicSinger musicSinger,Integer pageNum, Integer pageSize){
         return musicSingerService.pageList(musicSinger, pageNum == null? 1 :pageNum, pageSize == null? 10 : pageSize);
     }
+
+    @PostMapping("/logicalDeleteById")
+    public CommonResult<Integer> logicalDeleteById(@RequestBody Long id){
+        return musicSingerService.logicalDeleteById(id);
+    }
+
+     public CommonResult<Integer> logicalBatchDeleteByIds(@RequestBody List<MusicSinger> list){
+        return musicSingerService.logicalBatchDeleteByIds(list);
+     }
     
 }

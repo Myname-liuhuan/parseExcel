@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.parseexcel.common.constant.SystemConstant;
 import com.example.parseexcel.common.result.CommonResult;
 import com.example.parseexcel.module.music.dao.MusicSingerMapper;
 import com.example.parseexcel.module.music.dao.model.MusicSinger;
@@ -46,6 +47,32 @@ public class MusicSingerServiceImpl implements MusicSingerService {
         voPage.setSize(pageSize);
 
         return CommonResult.success(voPage);
+    }
+
+    /**
+     * 通过id逻辑删除
+     */
+    @Override
+    public CommonResult<Integer> logicalDeleteById(Long id) {
+        MusicSinger musicSinger = new MusicSinger();
+        musicSinger.setId(id);
+        musicSinger.setDelFlag(1);
+        return CommonResult.success(musicSingerMapper.updateById(musicSinger));
+    }
+
+    @Override
+    public CommonResult<Integer> logicalBatchDeleteByIds(List<MusicSinger> list) {
+        //验证ids空
+        if (list == null || list.size() == 0) {
+            return CommonResult.failed("选择行不能为空");
+        }
+        //将list.delFlag设置为删除状态
+        list.forEach(record -> {
+            record.setDelFlag(SystemConstant.DEL_FLAG_YES);
+        });
+        
+        int count = musicSingerMapper.logicalBatchDeleteByIds(list);
+        return CommonResult.success(count);
     }
     
 }

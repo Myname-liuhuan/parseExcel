@@ -18,5 +18,7 @@ public interface MusicSingerMapper extends BaseMapper<MusicSinger> {
 
     @Select("SELECT FOUND_ROWS()")
     Integer getTotal();
+
+    Integer logicalBatchDeleteByIds(List<MusicSinger> list);
     
 }
