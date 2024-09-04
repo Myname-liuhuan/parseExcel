@@ -31,9 +31,7 @@
             <if test="updateUser != null">
                 AND update_user = #{updateUser}
             </if>
-            <if test="delFlag != null">
-                AND del_flag = #{delFlag}
-            </if>
+            AND del_flag = 0
         </where>
    </sql>
 
@@ -66,9 +64,7 @@
             <if test="musicSinger.updateUser != null">
                 AND update_user = #{musicSinger.updateUser}
             </if>
-            <if test="musicSinger.delFlag != null">
-                AND del_flag = #{musicSinger.delFlag}
-            </if>
+             AND del_flag = 0
         </where>
    </sql>
    

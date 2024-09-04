@@ -37,12 +37,10 @@
             <if test="musicInfo.updateUser != null">
                 AND update_user = #{musicInfo.updateUser}
             </if>
-            <if test="musicInfo.delFlag != null">
-                AND del_flag = #{musicInfo.delFlag}
-            </if>
             <if test="musicInfo.singerName != null and musicInfo.singerName != ''">
                 AND s.name LIKE CONCAT('%', #{musicInfo.singerName}, '%' )
             </if>
+             AND del_flag = 0
         </where>
    </sql>
    
@@ -82,12 +80,10 @@
             <if test="musicInfo.updateUser != null">
                 AND ${tableAlias}.update_user = #{musicInfo.updateUser}
             </if>
-            <if test="musicInfo.delFlag != null">
-                AND ${tableAlias}.del_flag = #{musicInfo.delFlag}
-            </if>
             <if test="musicInfo.singerName != null and musicInfo.singerName != ''">
                 AND s.name LIKE CONCAT('%', #{musicInfo.singerName}, '%' )
             </if>
+                AND ${tableAlias}.del_flag = 0
         </where>
    </sql>
 
