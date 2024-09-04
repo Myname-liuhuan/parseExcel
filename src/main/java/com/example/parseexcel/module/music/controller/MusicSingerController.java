@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.parseexcel.common.result.CommonResult;
 import com.example.parseexcel.module.music.dao.model.MusicSinger;
 import com.example.parseexcel.module.music.dao.vo.MusicSingerVO;
@@ -33,6 +34,11 @@ public class MusicSingerController {
     @PostMapping("/saveMusicSinger")
     public CommonResult<Integer> saveMusicSinger(@RequestBody MusicSinger musicSinger){
         return musicSingerService.saveMusicSinger(musicSinger);
+    }
+
+    @GetMapping("/pageList")
+    public CommonResult<Page<MusicSingerVO>> pageList(MusicSinger musicSinger,Integer pageNum, Integer pageSize){
+        return musicSingerService.pageList(musicSinger, pageNum == null? 1 :pageNum, pageSize == null? 10 : pageSize);
     }
     
 }

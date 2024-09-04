@@ -36,6 +36,42 @@
             </if>
         </where>
    </sql>
+
+   <sql id="where_page_param">
+        <where>
+            <if test="musicSinger.id != null">
+                AND id = #{musicSinger.id}
+            </if>
+            <if test="musicSinger.name != null and musicSinger.name != '' ">
+                AND name = #{musicSinger.name}
+            </if>
+            <if test="musicSinger.sex != null  ">
+                AND sex = #{musicSinger.sex}
+            </if>
+             <if test="musicSinger.singerType != null  ">
+                AND singer_type = #{musicSinger.singerType}
+            </if>
+             <if test="musicSinger.birthday != null  ">
+                AND birthday = #{musicSinger.birthday}
+            </if>
+            <if test="musicSinger.createTime != null">
+                AND create_time = #{musicSinger.createTime}
+            </if>
+            <if test="musicSinger.updateTime != null">
+                AND update_time = #{musicSinger.updateTime}
+            </if>
+            <if test="musicSinger.createUser != null">
+                AND create_user = #{musicSinger.createUser}
+            </if>
+            <if test="musicSinger.updateUser != null">
+                AND update_user = #{musicSinger.updateUser}
+            </if>
+            <if test="musicSinger.delFlag != null">
+                AND del_flag = #{musicSinger.delFlag}
+            </if>
+        </where>
+   </sql>
+   
    
 
     <select id="getList" resultType="com.example.parseexcel.module.music.dao.vo.MusicSingerVO">
@@ -43,5 +79,13 @@
             *
         FROM d_singer
         <include refid='where_param'/>
+    </select>
+
+    <select id="pageList" resultType="com.example.parseexcel.module.music.dao.vo.MusicSingerVO">
+        SELECT
+            SQL_CALC_FOUND_ROWS *
+        FROM d_singer
+        <include refid='where_page_param'/>
+        LIMIT #{offset}, #{pageSize}
     </select>
 </mapper>
