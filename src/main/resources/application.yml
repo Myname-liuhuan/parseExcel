@@ -13,13 +13,6 @@ spring:
     password: lh123456
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-logging:
-  level:
-    org:
-      springframework: error
-    com:
-      example:
-        mapper: debug
 
 # MyBatis配置
 mybatis-plus:
@@ -38,5 +31,9 @@ kettle:
 file:
   source-path: /Users/huanliu/Documents/tempfile/video
   target-path: /Users/huanliu/Documents/tempfile/audio
-
+#图片本地存储路径
+image:
+  path: D:/tmp/media/image/
+  #使用占位符填充为当前ip地址
+  prefix-url: http://#{T(java.net.InetAddress).getLocalHost().getHostAddress()}/media/image/
 
