@@ -1,0 +1,62 @@
+package com.example.parseexcel.module.image.service.impl;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.ibatis.executor.BatchResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.parseexcel.common.config.AppConfig;
+import com.example.parseexcel.common.result.CommonResult;
+import com.example.parseexcel.module.image.dao.LocalImageInfoMapper;
+import com.example.parseexcel.module.image.dao.model.LocalImageInfo;
+import com.example.parseexcel.module.image.service.LocalImageService;
+
+/**
+ * IMAGE 本地图片服务实现
+ */
+@Service
+public class LocalImageServiceImpl implements LocalImageService {
+
+    @Autowired
+    AppConfig appConfig;
+
+    @Autowired
+    LocalImageInfoMapper localImageInfoMapper;
+
+    /**
+     * 手动刷新本地图片信息到数据库
+     */
+    @Override
+    public CommonResult<Integer> refreshPath() {
+        //读取配置文件的参数
+        String imagePath = appConfig.imagePath;
+        List<LocalImageInfo> list =  new ArrayList<>();
+        //读取图片信息到list
+        File imageFile = new File(imagePath);
+        if (!imageFile.isDirectory()) {
+            return CommonResult.failed("图片路径配置错误！");
+        }
+
+        String prefixUrl = appConfig.prefixUrl;
+        for(File file : imageFile.listFiles()){
+            if (file.isFile()) {
+                LocalImageInfo imageInfo = new LocalImageInfo();
+                imageInfo.setImagePath(prefixUrl + file.getName());
+                list.add(imageInfo);
+            }
+        } 
+
+        //清空image表
+        localImageInfoMapper.deleteAll();
+
+        //插入数据
+        List<BatchResult> batchResult = localImageInfoMapper.insert(list, list.size());
+        //求出总结果数量
+
+        return CommonResult.success(list.size());
+    }
+    
+}
