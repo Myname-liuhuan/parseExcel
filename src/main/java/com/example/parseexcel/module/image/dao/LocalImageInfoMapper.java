@@ -10,7 +10,7 @@ import com.example.parseexcel.module.image.dao.model.LocalImageInfo;
 public interface LocalImageInfoMapper extends BaseMapper<LocalImageInfo> {
 
 
-    @Delete("delete from t_local_image_info")
+    @Delete("truncate table t_local_image_info")
     Integer deleteAll();
     
 }

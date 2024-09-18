@@ -7,7 +7,9 @@ import java.util.List;
 import org.apache.ibatis.executor.BatchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.parseexcel.common.config.AppConfig;
 import com.example.parseexcel.common.result.CommonResult;
 import com.example.parseexcel.module.image.dao.LocalImageInfoMapper;
@@ -18,7 +20,7 @@ import com.example.parseexcel.module.image.service.LocalImageService;
  * IMAGE 本地图片服务实现
  */
 @Service
-public class LocalImageServiceImpl implements LocalImageService {
+public class LocalImageServiceImpl extends ServiceImpl<LocalImageInfoMapper, LocalImageInfo> implements LocalImageService {
 
     @Autowired
     AppConfig appConfig;
@@ -29,6 +31,7 @@ public class LocalImageServiceImpl implements LocalImageService {
     /**
      * 手动刷新本地图片信息到数据库
      */
+    @Transactional
     @Override
     public CommonResult<Integer> refreshPath() {
         //读取配置文件的参数
@@ -52,8 +55,8 @@ public class LocalImageServiceImpl implements LocalImageService {
         //清空image表
         localImageInfoMapper.deleteAll();
 
-        //插入数据
-        List<BatchResult> batchResult = localImageInfoMapper.insert(list, list.size());
+          //插入数据
+        this.saveBatch(list);
         //求出总结果数量
 
         return CommonResult.success(list.size());
