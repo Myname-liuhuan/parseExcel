@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.executor.BatchResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,9 @@ import com.example.parseexcel.module.image.service.LocalImageService;
 @Service
 public class LocalImageServiceImpl extends ServiceImpl<LocalImageInfoMapper, LocalImageInfo> implements LocalImageService {
 
+    private static final Logger logger = LoggerFactory.getLogger(LocalImageServiceImpl.class);
+
+    
     @Autowired
     AppConfig appConfig;
 
@@ -58,8 +62,13 @@ public class LocalImageServiceImpl extends ServiceImpl<LocalImageInfoMapper, Loc
           //插入数据
         this.saveBatch(list);
         //求出总结果数量
+        Long countLong =  localImageInfoMapper.selectCount(null);
+        Integer count = countLong == null? 0 : countLong.intValue();
+        if (count != list.size()) {
+            logger.error("预计插入条数与实际插入条数不相等，请检查结果");
+        }
 
-        return CommonResult.success(list.size());
+        return CommonResult.success(count);
     }
     
 }
