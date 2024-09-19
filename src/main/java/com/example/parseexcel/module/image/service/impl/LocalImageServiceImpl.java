@@ -1,9 +1,5 @@
 package com.example.parseexcel.module.image.service.impl;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +13,14 @@ import com.example.parseexcel.module.image.dao.LocalImageInfoMapper;
 import com.example.parseexcel.module.image.dao.model.LocalImageInfo;
 import com.example.parseexcel.module.image.service.LocalImageService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * IMAGE 本地图片服务实现
  */
+@Slf4j
 @Service
 public class LocalImageServiceImpl extends ServiceImpl<LocalImageInfoMapper, LocalImageInfo> implements LocalImageService {
-
-    private static final Logger logger = LoggerFactory.getLogger(LocalImageServiceImpl.class);
-
     
     @Autowired
     AppConfig appConfig;
@@ -38,37 +34,40 @@ public class LocalImageServiceImpl extends ServiceImpl<LocalImageInfoMapper, Loc
     @Transactional
     @Override
     public CommonResult<Integer> refreshPath() {
+        log.error("预计插入条数与实际插入条数不相等，请检查结果");
+        return null;
+        
         //读取配置文件的参数
-        String imagePath = appConfig.imagePath;
-        List<LocalImageInfo> list =  new ArrayList<>();
-        //读取图片信息到list
-        File imageFile = new File(imagePath);
-        if (!imageFile.isDirectory()) {
-            return CommonResult.failed("图片路径配置错误！");
-        }
+        // String imagePath = appConfig.imagePath;
+        // List<LocalImageInfo> list =  new ArrayList<>();
+        // //读取图片信息到list
+        // File imageFile = new File(imagePath);
+        // if (!imageFile.isDirectory()) {
+        //     return CommonResult.failed("图片路径配置错误！");
+        // }
 
-        String prefixUrl = appConfig.prefixUrl;
-        for(File file : imageFile.listFiles()){
-            if (file.isFile()) {
-                LocalImageInfo imageInfo = new LocalImageInfo();
-                imageInfo.setImagePath(prefixUrl + file.getName());
-                list.add(imageInfo);
-            }
-        } 
+        // String prefixUrl = appConfig.prefixUrl;
+        // for(File file : imageFile.listFiles()){
+        //     if (file.isFile()) {
+        //         LocalImageInfo imageInfo = new LocalImageInfo();
+        //         imageInfo.setImagePath(prefixUrl + file.getName());
+        //         list.add(imageInfo);
+        //     }
+        // } 
 
-        //清空image表
-        localImageInfoMapper.deleteAll();
+        // //清空image表
+        // localImageInfoMapper.deleteAll();
 
-          //插入数据
-        this.saveBatch(list);
-        //求出总结果数量
-        Long countLong =  localImageInfoMapper.selectCount(null);
-        Integer count = countLong == null? 0 : countLong.intValue();
-        if (count != list.size()) {
-            logger.error("预计插入条数与实际插入条数不相等，请检查结果");
-        }
+        //   //插入数据
+        // this.saveBatch(list);
+        // //求出总结果数量
+        // Long countLong =  localImageInfoMapper.selectCount(null);
+        // Integer count = countLong == null? 0 : countLong.intValue();
+        // if (count != list.size()) {
+        //     logger.error("预计插入条数与实际插入条数不相等，请检查结果");
+        // }
 
-        return CommonResult.success(count);
+        // return CommonResult.success(count);
     }
     
 }
