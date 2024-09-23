@@ -82,6 +82,28 @@
         </filter>
     </appender>
 
+    <appender name="file_sql" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <file>${log.path}/sql.log</file>
+        <!-- 循环政策：基于时间创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志文件名格式 -->
+            <fileNamePattern>${log.path}/sql.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- 日志最大的历史 60天 -->
+			<maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 过滤的级别 -->
+            <level>DEBUG</level>
+			<!-- 匹配时的操作：接收（记录） -->
+            <onMatch>ACCEPT</onMatch>
+			<!-- 不匹配时的操作：拒绝（不记录） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
   
   	<!-- logger的name属性表示在这个包名及以下层级就会被记录日志 -->
 	<!-- Spring日志级别控制  -->
@@ -89,6 +111,8 @@
     <logger name="org.mybatis" level="info" />
     <logger name="org.mybatis.spring" level="info" />
     <logger name="org.apache.ibatis" level="info" />
+    <logger name="com.baomidou.mybatisplus" level="info" > <appender-ref ref="file_sql"/></logger>
+
 
     <logger name="com.example.parseexcel" level="info" />
 	
