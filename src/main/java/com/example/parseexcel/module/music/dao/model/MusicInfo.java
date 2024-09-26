@@ -3,12 +3,15 @@ package com.example.parseexcel.module.music.dao.model;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.JdbcType;
+
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.example.parseexcel.common.handler.EncryptTypeHandler;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -44,7 +47,8 @@ public class MusicInfo {
     //音乐图片
     private String imageUrl;
 
-    // 缩略图
+    // 缩略图  //加密
+    @TableField(jdbcType = JdbcType.VARCHAR, typeHandler = EncryptTypeHandler.class)
     private String miniImageUrl;
 
     // 音乐名
