@@ -39,6 +39,7 @@ public class MusicInfo {
     /**
      * 歌手名称
      */
+    @TableField(exist = false)
     private String singerName;
 
     // 音乐文件url地址
