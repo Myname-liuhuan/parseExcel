@@ -24,7 +24,7 @@ public class ProducerConfig {
      */
     @Bean
     public Supplier<Message<String>> musicInfoProducer() {
-        return () -> MessageBuilder.withPayload(String.format("第%d条消息", id++))
+        return () -> MessageBuilder.withPayload(String.format("第%d条静态消息", id++))
                 .build();
     }
 }
