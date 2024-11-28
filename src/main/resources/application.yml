@@ -13,6 +13,29 @@ spring:
     password: lh123456
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  cloud:
+    stream:
+      #mq配置
+      binders:
+        defaultRabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+      bindings:
+        musicInfoConsumer-in-0:
+          binder: defaultRabbit
+          destination: music-info-topic
+          group: music-info-group
+        musicInfoProducer-out-0:
+          binder: defaultRabbit
+          destination: music-info-topic
+    function:
+      definition: musicInfoProducer;musicInfoConsumer
 
 # MyBatis配置
 mybatis-plus:
