@@ -10,7 +10,7 @@ import java.util.function.Consumer;
  * @date 2024/10/13
  */
 @Configuration
-public class ConsumerConfig {
+public class RabbitMqConsumerConfig {
 
     /**
      * 消费端，@bean注解的方法名需要和配置文件里面的一样

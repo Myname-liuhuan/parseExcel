@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class MqTask {
+public class RabbitMqTask {
 
     private StreamBridge streamBridge;
 

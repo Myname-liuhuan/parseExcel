@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  * @date 2024/10/13
  */
 @Configuration
-public class ProducerConfig {
+public class RabbitMqProducerConfig {
 
     private int id = 1;
 
